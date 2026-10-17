@@ -1,7 +1,7 @@
 ﻿// ========== API Client (Simple Retry) ==========
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? (window.location.port === '5000' ? '/api' : 'http://localhost:5000/api')
-  : 'https://mayu-events-backend.onrender.com/api';
+  : 'https://mayu-events-api.onrender.com/api';
 
 const API = {
   async request(endpoint, options = {}) {
@@ -62,3 +62,4 @@ const API = {
   login: (email, password) => API.request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   getMe: () => API.request('/auth/me'),
 };
+
