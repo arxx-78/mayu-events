@@ -17,16 +17,15 @@ const API = {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    let retries = 0;
-    const maxRetries = 2;
+        let retries = 0;
+    const maxRetries = 3; // 3 retries
     
     while (retries <= maxRetries) {
       try {
         const response = await fetch(`${API_BASE}${endpoint}`, config);
         
-        // Handle empty response (server waking up)
         const text = await response.text();
-        if (!text) {
+        if (!text || text === "Server is starting up") {
           throw new Error('EMPTY_RESPONSE');
         }
         
@@ -41,14 +40,17 @@ const API = {
         }
         return data;
       } catch (error) {
-        if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON')) && retries < maxRetries) {
+        // If server is waking up, wait and retry
+        if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON') || error.message.includes('fetch')) && retries < maxRetries) {
           retries++;
-          console.log(`Server waking up... Retry ${retries}/${maxRetries} in 10 seconds`);
-          await new Promise(r => setTimeout(r, 10000)); // Wait 10 seconds
+          console.log(`Server waking up... Retry ${retries}/${maxRetries} in 20 seconds`);
+          await new Promise(r => setTimeout(r, 20000)); // Wait 20 seconds
           continue;
         }
         console.error('API Error:', error);
         throw new Error('Server is starting up. Please wait a moment and try again.');
+      }
+    }
       }
     }
   },
@@ -69,5 +71,6 @@ const API = {
   verifyPayment: (data) => API.request('/payment/verify', { method: 'POST', body: JSON.stringify(data) }),
   getPaymentConfig: () => API.request('/payment/config')
 };
+
 
 
