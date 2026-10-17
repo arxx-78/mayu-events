@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login - MAYU EVENTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #d4af37;
+  --gold-light: #ffd700;
+  --gold-dark: #b8860b;
+  --dark: #0a0a0a;
+  --dark-2: #1a1a1a;
+  --text: #ffffff;
+  --text-muted: #a0a0a0;
+  --gradient-gold: linear-gradient(135deg, #ffd700 0%, #d4af37 50%, #b8860b 100%);
+}
+body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--text); }
+h1, h2, h3 { font-family: 'Cinzel', serif; }
+
+.login-wrapper {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at bottom, rgba(184, 134, 11, 0.1) 0%, transparent 60%),
+              linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.login-wrapper::before {
+  content: ''; position: absolute; top: 20%; left: 20%;
+  width: 300px; height: 300px; background: rgba(212, 175, 55, 0.15);
+  filter: blur(100px); border-radius: 50%;
+}
+.login-wrapper::after {
+  content: ''; position: absolute; bottom: 20%; right: 20%;
+  width: 300px; height: 300px; background: rgba(212, 175, 55, 0.1);
+  filter: blur(100px); border-radius: 50%;
+}
+
+.login-card {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(10, 10, 10, 0.98));
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  padding: 50px 40px; border-radius: 20px;
+  max-width: 420px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(212, 175, 55, 0.05);
+  position: relative; z-index: 1;
+}
+
+.login-card .logo-center { text-align: center; margin-bottom: 30px; }
+.login-card .logo-center i {
+  font-size: 48px; color: var(--dark); background: var(--gradient-gold);
+  width: 80px; height: 80px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 15px; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
+.login-card h1 {
+  font-size: 28px; text-align: center; margin-bottom: 5px;
+  background: var(--gradient-gold); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; letter-spacing: 2px;
+}
+.login-card .sub {
+  text-align: center; color: var(--text-muted);
+  font-size: 13px; margin-bottom: 30px;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+
+.form-group { margin-bottom: 20px; position: relative; }
+.form-group label {
+  display: block; color: var(--gold);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%; padding: 14px 18px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1.5px solid rgba(212, 175, 55, 0.3);
+  border-radius: 10px; color: var(--text);
+  font-family: inherit; font-size: 14px; transition: all 0.3s;
+}
+.form-group input:focus {
+  outline: none; border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  background: rgba(10, 10, 10, 0.95);
+}
+.form-group input::placeholder { color: #555; }
+
+/* Fix Chrome autofill background */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover, 
+.form-group input:-webkit-autofill:focus, 
+.form-group input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.btn-submit {
+  width: 100%; padding: 16px;
+  background: var(--gradient-gold); color: var(--dark);
+  border: none; border-radius: 10px;
+  font-family: inherit; font-size: 15px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s;
+  margin-top: 10px; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6); }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.error-msg {
+  background: rgba(239, 68, 68, 0.1); color: #f87171;
+  padding: 12px; border-radius: 8px; font-size: 13px;
+  margin-bottom: 20px; display: none; border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.error-msg.show { display: block; }
+
+.back-link {
+  display: block; text-align: center; margin-top: 25px;
+  color: var(--text-muted); font-size: 13px;
+  text-decoration: none; transition: all 0.3s; letter-spacing: 1px;
+}
+.back-link:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo-center">
+      <i class="fas fa-crown"></i>
+    </div>
+    <h1>MAYU EVENTS</h1>
+    <p class="sub">Admin Portal</p>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- FAKE INPUTS TO TRICK BROWSER -->
+    <form id="loginForm" autocomplete="off" style="position: relative;">
+      <input type="text" style="display:none" autocomplete="username">
+      <input type="password" style="display:none" autocomplete="current-password">
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <!-- Added readonly onfocus trick -->
+        <input type="email" name="email" id="emailInput" placeholder="admin@eventpro.com" required autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+      </div>
+      
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" id="passwordInput" placeholder="••••••••" required autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')">
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-lock"></i> Sign In
+      </button>
+    </form>
+
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Website
+    </a>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/analytics.js"></script>
+<script>
+// 🚀 STRICT LOGIN PAGE: Always clear old session when arriving here
+localStorage.removeItem('eventpro_token');
+localStorage.removeItem('eventpro_user');
+
+const form = document.getElementById('loginForm');
+const errBox = document.getElementById('errorMsg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('button[type="submit"]');
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+  errBox.classList.remove('show');
+
+  try {
+    const data = Object.fromEntries(new FormData(form));
+    const res = await API.login(data.email, data.password);
+
+    if (res.success) {
+      localStorage.setItem('eventpro_token', res.token);
+      localStorage.setItem('eventpro_user', JSON.stringify(res.data));
+      Analytics.track('admin_login', { email: data.email });
+      window.location.replace('admin.html');
+    } else {
+      throw new Error(res.message || 'Login failed');
+    }
+  } catch (err) {
+    errBox.textContent = '❌ ' + err.message;
+    errBox.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }
+});
+</script>
+</body>
+</html>
