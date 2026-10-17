@@ -265,90 +265,49 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 <script src="js/api.js"></script>
 <script src="js/analytics.js"></script>
 
+
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('mainBookingForm');
   const successModal = document.getElementById('successModal');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
   if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      // 1. Get form data
-      const data = Object.fromEntries(new FormData(form));
-      
-      // 2. INSTANTLY show success modal (0 seconds wait)
-      successModal.classList.add('active');
-      
-      // 3. Reset the form
-      form.reset();
-      
-      // 4. Send to backend in background (Fire and Forget)
-      // Direct fetch use pandrom, API object ah illa
-      const API_URL = 'https://mayu-events-backend.onrender.com/api/bookings';
-      console.log('Sending booking in background...', data);
-      
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.json())
-      .then(res => console.log('✅ Background save success:', res))
-      .catch(err => console.error('❌ Background save failed:', err));
-    });
-  }
-
-  // Close modal function (global)
-  window.closeModal = function() {
-    if (successModal) successModal.classList.remove('active');
-  };
-
-  // Set min date
-  document.querySelectorAll('input[type="date"]').forEach(input => {
-    const today = new Date().toISOString().split('T')[0];
-    input.setAttribute('min', today);
-  });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById('mainBookingForm');
-  const successModal = document.getElementById('successModal');
-
-  if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const data = Object.fromEntries(new FormData(form));
-      const API_URL = 'https://mayu-events-backend.onrender.com/api/bookings';
+      const API_URL = 'https://mayu-events-api.onrender.com/api/bookings';
 
-      // 1. INSTANT SUCCESS (0 seconds wait)
-      successModal.classList.add('active');
-      form.reset();
+      // Show loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-      // 2. Background Save
-      console.log('Sending booking in background...', data);
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.json())
-      .then(res => console.log('✅ Background save success:', res))
-      .catch(err => {
-        console.error('❌ Background save failed:', err);
-        // If server was asleep, retry after 10 seconds
-        setTimeout(() => {
-          fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          }).then(res => res.json())
-            .then(res => console.log('✅ Retry save success:', res))
-            .catch(e => console.error('Retry failed:', e));
-        }, 10000);
-      });
+      try {
+        // Wait for server response before showing success
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error');
+        }
+
+        // Success only if response is OK
+        successModal.classList.add('active');
+        form.reset();
+
+      } catch (error) {
+        console.error('Booking failed:', error);
+        alert('❌ Failed to save booking. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     });
   }
 
@@ -368,4 +327,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
