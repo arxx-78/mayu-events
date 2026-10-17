@@ -1,6 +1,7 @@
-﻿const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? (window.location.port === '5000' ? '/api' : 'https://mayu-events-backend.onrender.com/api')
-  : '/api';
+﻿// ========== API Client ==========
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? (window.location.port === '5000' ? '/api' : 'http://localhost:5000/api')
+  : 'https://mayu-events-backend.onrender.com/api';
 
 const API = {
   async request(endpoint, options = {}) {
@@ -17,15 +18,15 @@ const API = {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-        let retries = 0;
-    const maxRetries = 3; // 3 retries
-    
+    let retries = 0;
+    const maxRetries = 3;
+
     while (retries <= maxRetries) {
       try {
         const response = await fetch(`${API_BASE}${endpoint}`, config);
         
         const text = await response.text();
-        if (!text || text === "Server is starting up") {
+        if (!text) {
           throw new Error('EMPTY_RESPONSE');
         }
         
@@ -40,17 +41,14 @@ const API = {
         }
         return data;
       } catch (error) {
-        // If server is waking up, wait and retry
         if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON') || error.message.includes('fetch')) && retries < maxRetries) {
           retries++;
           console.log(`Server waking up... Retry ${retries}/${maxRetries} in 20 seconds`);
-          await new Promise(r => setTimeout(r, 20000)); // Wait 20 seconds
+          await new Promise(r => setTimeout(r, 20000)); 
           continue;
         }
         console.error('API Error:', error);
         throw new Error('Server is starting up. Please wait a moment and try again.');
-      }
-    }
       }
     }
   },
@@ -71,6 +69,3 @@ const API = {
   verifyPayment: (data) => API.request('/payment/verify', { method: 'POST', body: JSON.stringify(data) }),
   getPaymentConfig: () => API.request('/payment/config')
 };
-
-
-
