@@ -264,49 +264,55 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 
 <script src="js/api.js"></script>
 <script src="js/analytics.js"></script>
+
 <script>
-const form = document.getElementById('mainBookingForm');
-const successModal = document.getElementById('successModal');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('mainBookingForm');
+  const successModal = document.getElementById('successModal');
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const submitBtn = form.querySelector('button[type="submit"]');
-  const originalText = submitBtn.innerHTML;
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-  const data = Object.fromEntries(new FormData(form));
-
-  try {
-    const res = await API.createBooking(data);
-    console.log('✅ Booking saved:', res);
-    Analytics.bookingSubmit(data);
-    if (res.data?.id) localStorage.setItem('last_booking_id', res.data.id);
-    successModal.classList.add('active');
-    form.reset();
-  } catch (error) {
-    // Handle empty response or JSON parse errors gracefully
-    if (error.message.includes('JSON') || error.message.includes('Unexpected end')) {
-      alert('⏳ Server is waking up. Please wait 10 seconds and try again.');
-    } else {
-      alert('❌ ' + error.message);
-    }
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = originalText;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 1. Get form data
+      const data = Object.fromEntries(new FormData(form));
+      
+      // 2. INSTANTLY show success modal (0 seconds wait)
+      successModal.classList.add('active');
+      
+      // 3. Reset the form
+      form.reset();
+      
+      // 4. Send to backend in background (Fire and Forget)
+      // Direct fetch use pandrom, API object ah illa
+      const API_URL = 'https://mayu-events-backend.onrender.com/api/bookings';
+      console.log('Sending booking in background...', data);
+      
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => console.log('✅ Background save success:', res))
+      .catch(err => console.error('❌ Background save failed:', err));
+    });
   }
-});
 
-function closeModal() {
-  successModal.classList.remove('active');
-}
+  // Close modal function (global)
+  window.closeModal = function() {
+    if (successModal) successModal.classList.remove('active');
+  };
 
-document.querySelectorAll('input[type="date"]').forEach(input => {
-  const today = new Date().toISOString().split('T')[0];
-  input.setAttribute('min', today);
+  // Set min date
+  document.querySelectorAll('input[type="date"]').forEach(input => {
+    const today = new Date().toISOString().split('T')[0];
+    input.setAttribute('min', today);
+  });
 });
 </script>
 </body>
 </html>
+
 
 
