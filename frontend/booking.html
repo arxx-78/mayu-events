@@ -285,7 +285,12 @@ form.addEventListener('submit', async (e) => {
     successModal.classList.add('active');
     form.reset();
   } catch (error) {
-    alert('❌ ' + error.message);
+    // Handle empty response or JSON parse errors gracefully
+    if (error.message.includes('JSON') || error.message.includes('Unexpected end')) {
+      alert('⏳ Server is waking up. Please wait 10 seconds and try again.');
+    } else {
+      alert('❌ ' + error.message);
+    }
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
@@ -303,3 +308,4 @@ document.querySelectorAll('input[type="date"]').forEach(input => {
 </script>
 </body>
 </html>
+
