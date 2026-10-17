@@ -1,4 +1,4 @@
-﻿// ========== API Client ==========
+﻿// ========== API Client (Simple Retry) ==========
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? (window.location.port === '5000' ? '/api' : 'http://localhost:5000/api')
   : 'https://mayu-events-backend.onrender.com/api';
@@ -6,10 +6,7 @@ const API_BASE = window.location.hostname === 'localhost' || window.location.hos
 const API = {
   async request(endpoint, options = {}) {
     const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-      },
+      headers: { 'Content-Type': 'application/json', ...options.headers },
       ...options
     };
 
@@ -18,16 +15,18 @@ const API = {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
+    // --- SIMPLE RETRY LOGIC ---
     let retries = 0;
     const maxRetries = 3;
-
+    
     while (retries <= maxRetries) {
       try {
         const response = await fetch(`${API_BASE}${endpoint}`, config);
         
+        // Empty response handle pannu (server sleep la irundha)
         const text = await response.text();
-        if (!text) {
-          throw new Error('EMPTY_RESPONSE');
+        if (!text || text.trim() === '') {
+           throw new Error('EMPTY_RESPONSE');
         }
         
         const data = JSON.parse(text);
@@ -41,10 +40,10 @@ const API = {
         }
         return data;
       } catch (error) {
-        if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON') || error.message.includes('fetch')) && retries < maxRetries) {
+        if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON')) && retries < maxRetries) {
           retries++;
-          console.log(`Server waking up... Retry ${retries}/${maxRetries} in 20 seconds`);
-          await new Promise(r => setTimeout(r, 20000)); 
+          console.log(`Server waking up... Retry ${retries}/${maxRetries} in 10 seconds`);
+          await new Promise(r => setTimeout(r, 10000)); // 10 seconds wait
           continue;
         }
         console.error('API Error:', error);
@@ -55,17 +54,11 @@ const API = {
 
   health: () => API.request('/health'),
   createBooking: (data) => API.request('/bookings', { method: 'POST', body: JSON.stringify(data) }),
-  getBookings: (params = {}) => {
-    const query = new URLSearchParams(params).toString();
-    return API.request(`/bookings?${query}`);
-  },
+  getBookings: (params = {}) => API.request(`/bookings?${new URLSearchParams(params).toString()}`),
   getStats: () => API.request('/bookings/stats'),
   updateBooking: (id, data) => API.request(`/bookings/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteBooking: (id) => API.request(`/bookings/${id}`, { method: 'DELETE' }),
   sendContact: (data) => API.request('/contact', { method: 'POST', body: JSON.stringify(data) }),
   login: (email, password) => API.request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   getMe: () => API.request('/auth/me'),
-  createOrder: (amount, bookingId) => API.request('/payment/create-order', { method: 'POST', body: JSON.stringify({ amount, bookingId }) }),
-  verifyPayment: (data) => API.request('/payment/verify', { method: 'POST', body: JSON.stringify(data) }),
-  getPaymentConfig: () => API.request('/payment/config')
 };
