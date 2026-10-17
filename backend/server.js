@@ -106,5 +106,16 @@ const startServer = async () => {
   }
 };
 
+
+// ========== SELF-PING (Prevent Render Sleep) ==========
+// Every 10 minutes, ping self to keep server awake
+if (process.env.NODE_ENV === 'production') {
+  setInterval(() => {
+    const url = `https://mayu-events-backend.onrender.com/api/health`;
+    fetch(url).catch(() => {});
+  }, 10 * 60 * 1000); // 10 minutes
+}
+
 startServer();
+
 
