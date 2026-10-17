@@ -17,21 +17,39 @@ const API = {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    try {
-      const response = await fetch(`${API_BASE}${endpoint}`, config);
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401 && window.location.pathname.includes('admin')) {
-          localStorage.removeItem('eventpro_token');
-          window.location.href = 'login.html';
+    let retries = 0;
+    const maxRetries = 2;
+    
+    while (retries <= maxRetries) {
+      try {
+        const response = await fetch(`${API_BASE}${endpoint}`, config);
+        
+        // Handle empty response (server waking up)
+        const text = await response.text();
+        if (!text) {
+          throw new Error('EMPTY_RESPONSE');
         }
-        throw new Error(data.message || 'Request failed');
+        
+        const data = JSON.parse(text);
+
+        if (!response.ok) {
+          if (response.status === 401 && window.location.pathname.includes('admin')) {
+            localStorage.removeItem('eventpro_token');
+            window.location.href = 'login.html';
+          }
+          throw new Error(data.message || 'Request failed');
+        }
+        return data;
+      } catch (error) {
+        if ((error.message === 'EMPTY_RESPONSE' || error.message.includes('JSON')) && retries < maxRetries) {
+          retries++;
+          console.log(`Server waking up... Retry ${retries}/${maxRetries} in 10 seconds`);
+          await new Promise(r => setTimeout(r, 10000)); // Wait 10 seconds
+          continue;
+        }
+        console.error('API Error:', error);
+        throw new Error('Server is starting up. Please wait a moment and try again.');
       }
-      return data;
-    } catch (error) {
-      console.error('API Error:', error);
-      throw error;
     }
   },
 
@@ -51,4 +69,5 @@ const API = {
   verifyPayment: (data) => API.request('/payment/verify', { method: 'POST', body: JSON.stringify(data) }),
   getPaymentConfig: () => API.request('/payment/config')
 };
+
 
