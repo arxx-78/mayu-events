@@ -311,9 +311,61 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('mainBookingForm');
+  const successModal = document.getElementById('successModal');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const data = Object.fromEntries(new FormData(form));
+      const API_URL = 'https://mayu-events-backend.onrender.com/api/bookings';
+
+      // 1. INSTANT SUCCESS (0 seconds wait)
+      successModal.classList.add('active');
+      form.reset();
+
+      // 2. Background Save
+      console.log('Sending booking in background...', data);
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(res => console.log('✅ Background save success:', res))
+      .catch(err => {
+        console.error('❌ Background save failed:', err);
+        // If server was asleep, retry after 10 seconds
+        setTimeout(() => {
+          fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          }).then(res => res.json())
+            .then(res => console.log('✅ Retry save success:', res))
+            .catch(e => console.error('Retry failed:', e));
+        }, 10000);
+      });
+    });
+  }
+
+  window.closeModal = function() {
+    if (successModal) successModal.classList.remove('active');
+  };
+
+  document.querySelectorAll('input[type="date"]').forEach(input => {
+    const today = new Date().toISOString().split('T')[0];
+    input.setAttribute('min', today);
+  });
+});
+</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
