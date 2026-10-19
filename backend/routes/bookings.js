@@ -13,7 +13,16 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ success: false, errors: errors.array() });
       }
 
-      const booking = await Booking.create({
+      // Convert date to proper format if needed
+if (req.body.date && typeof req.body.date === 'string' && req.body.date.includes('/')) {
+  const parts = req.body.date.split('/');
+  if (parts.length === 3) {
+    req.body.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    console.log('Date converted in backend:', req.body.date);
+  }
+}
+
+const booking = await Booking.create({
         ...req.body,
         ipAddress: req.ip,
         userAgent: req.get('user-agent') || ''
@@ -118,5 +127,6 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
