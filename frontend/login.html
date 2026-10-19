@@ -289,9 +289,9 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const data = Object.fromEntries(new FormData(form));
       
-      // Direct fetch call with retry logic for server wake up
+      // --- IMPROVED RETRY LOGIC ---
       let retries = 0;
-      const maxRetries = 3;
+      const maxRetries = 5; // Increased to 5 retries
       let success = false;
       let token = null;
       let userData = null;
@@ -304,8 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify(data)
           });
           
+          // If server is sleeping, it might return 502/503 or empty body
           const text = await response.text();
-          if (!text) throw new Error('EMPTY_RESPONSE');
+          if (!text || response.status === 502 || response.status === 503) {
+             throw new Error('SERVER_WAKING_UP');
+          }
           
           const res = JSON.parse(text);
           
@@ -317,14 +320,15 @@ document.addEventListener("DOMContentLoaded", () => {
              throw new Error(res.message || 'Invalid credentials');
           }
         } catch (err) {
-          if ((err.message === 'EMPTY_RESPONSE' || err.message.includes('fetch')) && retries < maxRetries) {
+          if ((err.message === 'SERVER_WAKING_UP' || err.message === 'EMPTY_RESPONSE' || err.message.includes('fetch')) && retries < maxRetries) {
             retries++;
-            errBox.textContent = `⏳ Server is starting up. Retrying in 10 seconds... (${retries}/${maxRetries})`;
+            errBox.textContent = `⏳ Server is waking up. Please wait... (Attempt ${retries}/${maxRetries})`;
             errBox.classList.add('show');
+            // Wait 10 seconds before retrying
             await new Promise(r => setTimeout(r, 10000));
             continue;
           }
-          throw err; // Throw other errors (like invalid credentials)
+          throw err; 
         }
       }
 
@@ -335,7 +339,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     } catch (err) {
-      errBox.textContent = '❌ ' + err.message;
+      if (err.message === 'SERVER_WAKING_UP' || err.message.includes('fetch')) {
+         errBox.textContent = '❌ Server is taking too long to wake up. Please try again.';
+      } else {
+         errBox.textContent = '❌ ' + err.message;
+      }
       errBox.classList.add('show');
     } finally {
       btn.disabled = false;
@@ -346,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
