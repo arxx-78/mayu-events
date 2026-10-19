@@ -282,6 +282,26 @@ h1, h2, h3, .brand-text, .hero-tagline { font-family: 'Cinzel', serif; }
   .booking-container { padding: 40px 25px; }
   .section-header h2 { font-size: 32px; }
 }
+@media (max-width: 768px) {
+  .navbar { padding: 10px 15px; }
+  .nav-logo { font-size: 18px; }
+  .nav-links { display: none; } /* Hide links on mobile, add hamburger later if needed */
+  .hero { padding: 100px 15px 50px; }
+  .hero h1 { font-size: 50px; }
+  .hero-tagline { font-size: 20px; }
+  .hero-subtitle { font-size: 14px; }
+  .hero-services-line { gap: 15px; font-size: 11px; }
+  .btn-hero { padding: 12px 25px; font-size: 12px; }
+  .services-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+  .service-card { padding: 15px; }
+  .service-icon { width: 50px; height: 50px; font-size: 20px; }
+  .service-card h3 { font-size: 12px; }
+  .booking-container { padding: 30px 20px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .booking-container h2 { font-size: 24px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 15px; }
+  .footer-logo { font-size: 22px; }
+}
 </style>
 </head>
 <body>
@@ -348,6 +368,7 @@ h1, h2, h3, .brand-text, .hero-tagline { font-family: 'Cinzel', serif; }
 <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 

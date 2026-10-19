@@ -142,6 +142,18 @@ td select:focus { outline: none; border-color: var(--gold); }
   .stat-card h3 { font-size: 28px; }
   .topbar h1 { font-size: 22px; }
 }
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.active { transform: translateX(0); }
+  .main { margin-left: 0; padding: 20px; }
+  .menu-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+  .stat-card h3 { font-size: 28px; }
+  .topbar h1 { font-size: 22px; }
+  .filters { flex-direction: column; }
+  .filters input, .filters select { width: 100%; }
+  .table-wrapper { overflow-x: auto; }
+  table { min-width: 700px; }
+}
 </style>
 </head>
 <body>
@@ -454,5 +466,6 @@ loadBookings();
 </script>
 </body>
 </html>
+
 
 
