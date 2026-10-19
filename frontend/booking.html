@@ -176,6 +176,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"]::-webkit-datetime-edit {
   color: white;
 }
+/* Golden Calendar Icon for Flatpickr */
+.flatpickr-input {
+  padding-right: 40px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d4af37'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 20px !important;
+  cursor: pointer !important;
+}
+
+/* Flatpickr Calendar Theme (Gold) */
+.flatpickr-calendar {
+  background: #1a1a1a !important;
+  border: 1.5px solid #d4af37 !important;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3) !important;
+}
+.flatpickr-day.selected {
+  background: #d4af37 !important;
+  border-color: #d4af37 !important;
+  color: #0a0a0a !important;
+}
+.flatpickr-day:hover {
+  background: rgba(212, 175, 55, 0.2) !important;
+  border-color: #d4af37 !important;
+}
+.flatpickr-months .flatpickr-month {
+  background: #0a0a0a !important;
+  color: #d4af37 !important;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: #0a0a0a !important;
+  color: #d4af37 !important;
+}
+.flatpickr-weekday {
+  color: #d4af37 !important;
+}
 </style>
 </head>
 <body>
@@ -370,6 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
 
 
