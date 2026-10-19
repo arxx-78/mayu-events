@@ -27,12 +27,13 @@ router.post('/',
         userAgent: req.get('user-agent') || ''
       });
 
-      sendBookingConfirmation(booking).catch(console.error);
-      sendAdminNotification(booking).catch(console.error);
+      // Send emails (Wait for them to finish)
+      await sendBookingConfirmation(booking).catch(err => console.error('Customer email error:', err));
+      await sendAdminNotification(booking).catch(err => console.error('Admin email error:', err));
 
       res.status(201).json({
         success: true,
-        message: 'Booking received! We will contact you within 30 minutes.',
+        message: 'Booking confirmed! Check your email for details.',
         data: { id: booking._id, name: booking.name }
       });
     } catch (error) {
@@ -125,3 +126,4 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
