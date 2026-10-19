@@ -315,6 +315,11 @@ h1, h2, h3, .brand-text, .hero-tagline { font-family: 'Cinzel', serif; }
 .gallery-item:hover img { transform: scale(1.1); }
 .gallery-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); color: var(--gold); font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; text-align: center; }
 @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .gallery-overlay { padding: 10px; font-size: 14px; } }
+.gallery-section { padding: 60px 20px; background: var(--dark); }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+.gallery-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; border-radius: 15px; aspect-ratio: 1/1; transition: transform 0.3s; }
+.gallery-item:hover { transform: translateY(-5px); }
+@media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .gallery-item { padding: 20px 10px; } .gallery-item i { font-size: 30px !important; } .gallery-item h3 { font-size: 12px !important; } }
 </style>
 </head>
 <body>
@@ -381,6 +386,7 @@ h1, h2, h3, .brand-text, .hero-tagline { font-family: 'Cinzel', serif; }
 <script src="js/main.js"></script>
 </body>
 </html>
+
 
 
 
