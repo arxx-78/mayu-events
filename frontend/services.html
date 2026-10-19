@@ -54,6 +54,24 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   .service-card h3 { font-size: 12px; }
 }
 </style>
+<style>
+body {
+  background-image: url('images/logo.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  background-size: 40% !important;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.98) 80%);
+  z-index: -1;
+  pointer-events: none;
+}
+</style>
+
 </head>
 <body>
 
@@ -106,4 +124,5 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 
 </body>
 </html>
+
 
