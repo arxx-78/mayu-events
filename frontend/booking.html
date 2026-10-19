@@ -412,19 +412,54 @@ html::before, body::before {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('mainBookingForm');
   const successModal = document.getElementById('successModal');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // Function to blast confetti (balloons and papers)
+  function blastConfetti() {
+    var duration = 4 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+  }
 
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const data = Object.fromEntries(new FormData(form));
+      const formData = Object.fromEntries(new FormData(form));
+      
+      // Convert date format
+      if (formData.date) {
+        const parts = formData.date.split('/');
+        if (parts.length === 3) {
+          formData.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+      }
+      
+      const data = formData;
       const API_URL = 'https://mayu-events-api.onrender.com/api/bookings';
 
-      const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -441,31 +476,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = JSON.parse(text);
 
         if (res.success) {
-          // 1. Show success modal
+          // 1. SHOW SUCCESS MODAL
           successModal.classList.add('active');
 
-          // 2. BLAST CONFETTI (Colorful Papers and Balloons)
-          var duration = 3 * 1000;
-          var animationEnd = Date.now() + duration;
-          var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
-
-          function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-          }
-
-          var interval = setInterval(function() {
-            var timeLeft = animationEnd - Date.now();
-
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-
-            var particleCount = 50 * (timeLeft / duration);
-            // Confetti from left
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-            // Confetti from right
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-          }, 250);
+          // 2. BLAST CONFETTI (Balloons + Papers)
+          blastConfetti();
 
           // 3. Reset form
           form.reset();
@@ -492,6 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
 
 
