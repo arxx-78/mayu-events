@@ -353,12 +353,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#eventDate", {
+      dateFormat: "d/m/Y",
+      minDate: "today",
+      allowInput: true,
+    });
+  });
+</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
 
 
 
