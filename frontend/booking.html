@@ -387,6 +387,29 @@ html::before, body::before {
 
 
 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#eventDate", {
+      dateFormat: "d/m/Y",
+      minDate: "today",
+      allowInput: true,
+    });
+  });
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#eventDate", {
+      dateFormat: "d/m/Y",
+      minDate: "today",
+      allowInput: true,
+    });
+  });
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('mainBookingForm');
@@ -405,29 +428,54 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-      try {
-        // Wait for server response before showing success
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+      // Retry logic
+      let retries = 0;
+      const maxRetries = 3;
+      let success = false;
 
-        if (!response.ok) {
-          throw new Error('Server error');
+      while (retries <= maxRetries && !success) {
+        try {
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          const text = await response.text();
+          
+          // If server is sleeping (empty response or 502/503)
+          if (!text || response.status === 502 || response.status === 503) {
+            throw new Error('SERVER_WAKING_UP');
+          }
+
+          const res = JSON.parse(text);
+
+          if (res.success) {
+            success = true;
+            successModal.classList.add('active');
+            form.reset();
+          } else {
+            throw new Error(res.message || 'Failed to save booking');
+          }
+        } catch (err) {
+          if ((err.message === 'SERVER_WAKING_UP' || err.message.includes('fetch')) && retries < maxRetries) {
+            retries++;
+            console.log(`Server waking up... Retry ${retries}/${maxRetries}`);
+            await new Promise(r => setTimeout(r, 10000)); // Wait 10 seconds
+            continue;
+          }
+          
+          // If all retries failed
+          alert('❌ Failed to save booking. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
         }
-
-        // Success only if response is OK
-        successModal.classList.add('active');
-        form.reset();
-
-      } catch (error) {
-        console.error('Booking failed:', error);
-        alert('❌ Failed to save booking. Please try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
       }
+
+      // Reset button
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
     });
   }
 
@@ -441,34 +489,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#eventDate", {
-      dateFormat: "d/m/Y",
-      minDate: "today",
-      allowInput: true,
-    });
-  });
-</script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#eventDate", {
-      dateFormat: "d/m/Y",
-      minDate: "today",
-      allowInput: true,
-    });
-  });
-</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
 
 
 
