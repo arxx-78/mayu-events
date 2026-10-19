@@ -420,7 +420,15 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      const data = Object.fromEntries(new FormData(form));
+      const formData = Object.fromEntries(new FormData(form));
+// Convert DD/MM/YYYY to ISO format (YYYY-MM-DD)
+if (formData.date) {
+  const parts = formData.date.split('/');
+  if (parts.length === 3) {
+    formData.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  }
+}
+const data = formData;
       const API_URL = 'https://mayu-events-api.onrender.com/api/bookings';
 
       // Show loading state
@@ -495,6 +503,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
 
 

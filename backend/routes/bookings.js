@@ -1,20 +1,12 @@
 ﻿const express = require('express');
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const Booking = require('../models/Booking');
 const { sendBookingConfirmation, sendAdminNotification } = require('../utils/mailer');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/',
-  [
-    body('name').trim().notEmpty().withMessage('Name required').isLength({ max: 100 }),
-    body('phone').trim().notEmpty().withMessage('Phone required').matches(/^[\d\s+\-()]{7,20}$/),
-    body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
-    body('eventType').trim().notEmpty().withMessage('Event type required'),
-    body('date').isISO8601().withMessage('Valid date required')
-  ],
-  async (req, res) => {
+router.post('/', async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -126,4 +118,5 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
