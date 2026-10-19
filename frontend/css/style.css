@@ -54,3 +54,145 @@ body::before {
   pointer-events: none;
 }
 
+
+/* ========== PREMIUM ENHANCEMENTS ========== */
+
+/* 1. Gold Glow Text */
+h1, h2, h3, .nav-logo {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* 2. Smooth Fade-In Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* 3. Card Hover Glow */
+.service-card, .why-card, .contact-item, .stat-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover, .why-card:hover, .contact-item:hover, .stat-card:hover {
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3), 0 0 20px rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+}
+
+/* 4. Button Pulse Animation */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.btn-hero, .booking-submit {
+  animation: pulse 2s infinite;
+}
+
+/* 5. Gradient Border Animation */
+@keyframes borderGlow {
+  0% { border-color: rgba(212, 175, 55, 0.3); }
+  50% { border-color: rgba(212, 175, 55, 0.8); }
+  100% { border-color: rgba(212, 175, 55, 0.3); }
+}
+
+.booking-container, .login-card {
+  animation: borderGlow 3s infinite;
+}
+
+/* 6. Navbar Blur Effect */
+.navbar {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* 7. Section Divider (Gold Line) */
+.section-header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 20px auto 0;
+}
+
+/* 8. Floating Animation for Icons */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.service-icon, .why-card i, .contact-item i {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 9. Input Focus Glow */
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4) !important;
+  border-color: #ffd700 !important;
+}
+
+/* 10. Gold Gradient Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #d4af37, #b8860b);
+  border-radius: 10px;
+}
+
+/* 11. Loading Spinner (Gold) */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.fa-spinner {
+  animation: spin 1s linear infinite;
+  color: #d4af37;
+}
+
+/* 12. Text Selection Color */
+::selection {
+  background: #d4af37;
+  color: #0a0a0a;
+}
+
+/* 13. Gold Underline for Links */
+.nav-links a {
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transition: width 0.3s;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* 14. Fade-In for Page Load */
+body {
+  animation: fadeIn 0.5s ease-in;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 15. Glassmorphism Cards */
+.stat-card, .card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
