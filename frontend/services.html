@@ -53,6 +53,35 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   .service-icon { width: 50px; height: 50px; font-size: 20px; }
   .service-card h3 { font-size: 12px; }
 }
+.service-card {
+  background: #1a1a1a;
+  border: 1.5px solid rgba(212,175,55,0.3);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #d4af37;
+  box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+}
+.service-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.service-content {
+  padding: 20px;
+  text-align: center;
+}
+.service-content h3 {
+  color: #d4af37;
+  font-size: 16px;
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
 </style>
 <style>
 body {
@@ -69,6 +98,35 @@ body::before {
   background: radial-gradient(circle, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.98) 80%);
   z-index: -1;
   pointer-events: none;
+}
+.service-card {
+  background: #1a1a1a;
+  border: 1.5px solid rgba(212,175,55,0.3);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #d4af37;
+  box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+}
+.service-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.service-content {
+  padding: 20px;
+  text-align: center;
+}
+.service-content h3 {
+  color: #d4af37;
+  font-size: 16px;
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
 }
 </style>
 
@@ -92,30 +150,99 @@ body::before {
 
 <section class="services-section">
   <div class="services-grid">
-    <div class="service-card"><div class="service-icon"><i class="fas fa-birthday-cake"></i></div><h3>Birthday Party</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-theater-masks"></i></div><h3>Stage Decor</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-utensils"></i></div><h3>Catering Service</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-camera"></i></div><h3>Photo & Video</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-helicopter"></i></div><h3>Drone Shoot</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-mobile-alt"></i></div><h3>Reels Shoot</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-leaf"></i></div><h3>Garland Decor</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-clock"></i></div><h3>12 O'Clock Surprise</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-gift"></i></div><h3>All Surprise Events</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-headphones"></i></div><h3>DJ</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-volume-up"></i></div><h3>Sounds & Light</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-drum"></i></div><h3>Chandam Melam</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-church"></i></div><h3>Kovil Functions</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-bomb"></i></div><h3>Paper Blast</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-motorcycle"></i></div><h3>Bike Surprise</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-home"></i></div><h3>Home/Shop Opening</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-school"></i></div><h3>School/College</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-fire"></i></div><h3>Crackers</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-car"></i></div><h3>Car Decor</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-tv"></i></div><h3>Private Theatre</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-female"></i></div><h3>Welcome Girls</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-music"></i></div><h3>Dance</h3></div>
-    <div class="service-card"><div class="service-icon"><i class="fas fa-baby"></i></div><h3>Baby Shower</h3></div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80" alt="Birthday" class="service-image">
+    <div class="service-content"><h3>BIRTHDAY PARTY</h3></div>
   </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=400&q=80" alt="Stage Decor" class="service-image">
+    <div class="service-content"><h3>STAGE DECOR</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=400&q=80" alt="Catering" class="service-image">
+    <div class="service-content"><h3>CATERING SERVICE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80" alt="Photo" class="service-image">
+    <div class="service-content"><h3>PHOTO & VIDEO</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&q=80" alt="Drone" class="service-image">
+    <div class="service-content"><h3>DRONE SHOOT</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&q=80" alt="Reels" class="service-image">
+    <div class="service-content"><h3>REELS SHOOT</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?w=400&q=80" alt="Garland" class="service-image">
+    <div class="service-content"><h3>GARLAND DECOR</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="Surprise" class="service-image">
+    <div class="service-content"><h3>12 O'CLOCK SURPRISE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400&q=80" alt="All Surprise" class="service-image">
+    <div class="service-content"><h3>ALL SURPRISE EVENTS</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80" alt="DJ" class="service-image">
+    <div class="service-content"><h3>DJ</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80" alt="Sound & Light" class="service-image">
+    <div class="service-content"><h3>SOUNDS & LIGHT</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80" alt="Melam" class="service-image">
+    <div class="service-content"><h3>CHANDAM MELAM</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=400&q=80" alt="Kovil" class="service-image">
+    <div class="service-content"><h3>KOVIL FUNCTIONS</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1489619684131-3d9c4c7d8d9c?w=400&q=80" alt="Paper Blast" class="service-image">
+    <div class="service-content"><h3>PAPER BLAST</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400&q=80" alt="Bike" class="service-image">
+    <div class="service-content"><h3>BIKE SURPRISE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1513581166391-887a96ddeafd?w=400&q=80" alt="Home" class="service-image">
+    <div class="service-content"><h3>HOME/SHOP OPENING</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=80" alt="School" class="service-image">
+    <div class="service-content"><h3>SCHOOL/COLLEGE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&q=80" alt="Crackers" class="service-image">
+    <div class="service-content"><h3>CRACKERS</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&q=80" alt="Car" class="service-image">
+    <div class="service-content"><h3>CAR DECOR</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80" alt="Theatre" class="service-image">
+    <div class="service-content"><h3>PRIVATE THEATRE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Welcome" class="service-image">
+    <div class="service-content"><h3>WELCOME GIRLS</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&q=80" alt="Dance" class="service-image">
+    <div class="service-content"><h3>DANCE</h3></div>
+  </div>
+  <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=400&q=80" alt="Baby Shower" class="service-image">
+    <div class="service-content"><h3>BABY SHOWER</h3></div>
+  </div>
+</div>
 </section>
 
 <footer class="footer">
@@ -124,5 +251,6 @@ body::before {
 
 </body>
 </html>
+
 
 
