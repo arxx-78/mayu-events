@@ -442,7 +442,65 @@ html::before, body::before {
   pointer-events: none;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>`n</head>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>`n<style>
+/* HOME PAGE - GOLD + BLACK THEME */
+body {
+  background-image: url('images/logo.png') !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  background-size: 35% !important;
+  background-color: #0a0a0a !important;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.95) 90%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Gold Glow Effects */
+.hero h1 {
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.5) !important;
+}
+
+.hero-tagline, .hero-subtitle {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* Navbar Logo */
+.nav-logo img {
+  height: 40px !important;
+  width: auto !important;
+  margin-right: 10px !important;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6)) !important;
+}
+
+/* Hero Logo */
+.hero-logo img {
+  height: 120px !important;
+  width: auto !important;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) !important;
+}
+
+/* Section Headers */
+.section-header h2 {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* Buttons */
+.btn-hero {
+  box-shadow: 0 4px 30px rgba(212, 175, 55, 0.5) !important;
+}
+.btn-hero:hover {
+  box-shadow: 0 8px 40px rgba(212, 175, 55, 0.8) !important;
+}
+</style>
+</head>
 <body>
 
 <nav class="navbar">
@@ -591,6 +649,7 @@ function closePaymentModal() {
 </script>
 </body>
 </html>
+
 
 
 
