@@ -70,39 +70,50 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 .services-section { padding: 20px 20px 100px; background: var(--dark); }
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 .service-card {
-  background: #1a1a1a;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(10, 10, 10, 0.98));
   border: 1.5px solid rgba(212, 175, 55, 0.3);
   border-radius: 15px;
-  overflow: hidden;
+  padding: 30px 20px;
+  text-align: center;
   transition: all 0.3s;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
 }
 .service-card:hover {
   transform: translateY(-5px);
   border-color: var(--gold);
   box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
 }
-.service-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+.service-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--gradient-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: var(--dark);
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
 }
-.service-content {
-  padding: 20px;
-  text-align: center;
-}
-.service-content h3 {
+.service-card h3 {
+  font-size: 14px;
+  font-weight: 700;
   color: var(--gold-light);
-  font-size: 15px;
-  margin: 0;
   letter-spacing: 1px;
   text-transform: uppercase;
+  line-height: 1.4;
 }
 
 /* FOOTER */
@@ -113,9 +124,9 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   .nav-links { display: none; }
   .navbar { padding: 12px 20px; }
   .services-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .service-image { height: 120px; }
-  .service-content { padding: 12px; }
-  .service-content h3 { font-size: 11px; }
+  .service-card { padding: 20px 10px; min-height: 150px; }
+  .service-icon { width: 50px; height: 50px; font-size: 22px; margin-bottom: 15px; }
+  .service-card h3 { font-size: 11px; }
 }
 </style>
 </head>
@@ -140,18 +151,118 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   <div class="services-grid">
     <!-- 1. Birthday Party -->
     <div class="service-card">
-      <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80" alt="Welcome Girls" class="service-image">
-      <div class="service-content"><h3>Welcome Girls</h3></div>
+      <div class="service-icon"><i class="fas fa-birthday-cake"></i></div>
+      <h3>Birthday Party</h3>
+    </div>
+    <!-- 2. Stage Decor -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-theater-masks"></i></div>
+      <h3>Stage Decor</h3>
+    </div>
+    <!-- 3. Catering Service -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-utensils"></i></div>
+      <h3>Catering Service</h3>
+    </div>
+    <!-- 4. Photo & Videography -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-camera"></i></div>
+      <h3>Photo & Videography</h3>
+    </div>
+    <!-- 5. Drone Shoot -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-helicopter"></i></div>
+      <h3>Drone Shoot</h3>
+    </div>
+    <!-- 6. Reels Shoot -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+      <h3>Reels Shoot</h3>
+    </div>
+    <!-- 7. Garland Decor -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-leaf"></i></div>
+      <h3>Garland Decor</h3>
+    </div>
+    <!-- 8. 12 O'Clock Surprise -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-clock"></i></div>
+      <h3>12 O'Clock Surprise</h3>
+    </div>
+    <!-- 9. All Surprise Events -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-gift"></i></div>
+      <h3>All Surprise Events</h3>
+    </div>
+    <!-- 10. DJ -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-headphones"></i></div>
+      <h3>DJ</h3>
+    </div>
+    <!-- 11. Sounds & Light System -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-volume-up"></i></div>
+      <h3>Sounds & Light System</h3>
+    </div>
+    <!-- 12. Chandam Melam -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-drum"></i></div>
+      <h3>Chandam Melam</h3>
+    </div>
+    <!-- 13. A Kovil Functions -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-church"></i></div>
+      <h3>A Kovil Functions</h3>
+    </div>
+    <!-- 14. Paper Blast -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-bomb"></i></div>
+      <h3>Paper Blast</h3>
+    </div>
+    <!-- 15. Bike Surprise -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-motorcycle"></i></div>
+      <h3>Bike Surprise</h3>
+    </div>
+    <!-- 16. Home/Shop Opening Decor -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-home"></i></div>
+      <h3>Home/Shop Opening Decor</h3>
+    </div>
+    <!-- 17. School/College Functions -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-school"></i></div>
+      <h3>School/College Functions</h3>
+    </div>
+    <!-- 18. Crackers -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-fire"></i></div>
+      <h3>Crackers</h3>
+    </div>
+    <!-- 19. Car Decor / Pick-up & Drop -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-car"></i></div>
+      <h3>Car Decor / Pick-up & Drop</h3>
+    </div>
+    <!-- 20. Private Theatre / Hall Setup -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-tv"></i></div>
+      <h3>Private Theatre / Hall Setup</h3>
+    </div>
+    <!-- 21. Welcome Girls -->
+    <div class="service-card">
+      <div class="service-icon"><i class="fas fa-female"></i></div>
+      <h3>Welcome Girls</h3>
     </div>
     <!-- 22. Dance -->
     <div class="service-card">
-      <img src="images/dance.jpg" alt="Dance" class="service-image">
-      <div class="service-content"><h3>Dance</h3></div>
+      <div class="service-icon"><i class="fas fa-music"></i></div>
+      <h3>Dance</h3>
     </div>
     <!-- 23. Baby Shower -->
     <div class="service-card">
-      <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?w=400&q=80" alt="Baby Shower" class="service-image">
-      <div class="service-content"><h3>Baby Shower</h3></div>
+      <div class="service-icon"><i class="fas fa-baby"></i></div>
+      <h3>Baby Shower</h3>
     </div>
   </div>
 </section>
@@ -162,13 +273,3 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
