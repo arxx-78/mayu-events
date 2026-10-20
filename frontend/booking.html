@@ -462,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing... Please wait...';
 
       try {
         const response = await fetch(API_URL, {
@@ -507,6 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
 
 

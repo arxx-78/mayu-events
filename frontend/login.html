@@ -248,7 +248,7 @@ form.addEventListener('submit', async (e) => {
   const btn = form.querySelector('button[type="submit"]');
   const original = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Server waking up... Please wait...';
   errBox.classList.remove('show');
 
   try {
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const original = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Server waking up... Please wait...';
     errBox.classList.remove('show');
 
     try {
@@ -357,6 +357,8 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
+
 
 
 
