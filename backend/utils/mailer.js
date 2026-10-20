@@ -100,4 +100,50 @@ const verifyEmail = async () => {
   console.log('✅ Brevo API and Twilio configured');
 };
 
-module.exports = { sendBookingConfirmation, sendAdminNotification, sendWhatsAppConfirmation, verifyEmail };
+
+// ========== BOOKING CONFIRMED EMAIL ==========
+const sendBookingConfirmedEmail = async (booking) => {
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': BREVO_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { name: 'MAYU EVENTS', email: 'aarasu7661@gmail.com' },
+        to: [{ email: booking.email }],
+        subject: '✅ Your Event is Confirmed - MAYU EVENTS',
+        htmlContent: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: linear-gradient(135deg, #d4af37, #ffd700); padding: 30px; border-radius: 12px 12px 0 0; text-align: center; color: #0a0a0a;">
+              <h1 style="margin: 0;">MAYU EVENTS</h1>
+              <p style="margin: 8px 0 0;">Event Confirmed!</p>
+            </div>
+            <div style="background: #1a1a1a; padding: 30px; border-radius: 0 0 12px 12px; border: 1px solid #d4af37; color: white;">
+              <h2>Hi ${booking.name},</h2>
+              <p>We are pleased to inform you that your event has been <strong>successfully confirmed</strong>! 🎉</p>
+              <h3>Booking Summary:</h3>
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="padding: 10px; border-bottom: 1px solid #333;"><strong>Event Type:</strong></td><td style="padding: 10px; border-bottom: 1px solid #333;">${booking.eventType}</td></tr>
+                <tr><td style="padding: 10px; border-bottom: 1px solid #333;"><strong>Event Date:</strong></td><td style="padding: 10px; border-bottom: 1px solid #333;">${new Date(booking.date).toLocaleDateString()}</td></tr>
+                <tr><td style="padding: 10px; border-bottom: 1px solid #333;"><strong>Guests:</strong></td><td style="padding: 10px; border-bottom: 1px solid #333;">${booking.guests}</td></tr>
+                <tr><td style="padding: 10px; border-bottom: 1px solid #333;"><strong>Budget:</strong></td><td style="padding: 10px; border-bottom: 1px solid #333;">${booking.budget || 'Not specified'}</td></tr>
+              </table>
+              <p style="margin-top: 30px;">We look forward to making your event unforgettable!</p>
+              <p style="margin-top: 30px;">For any queries, call us at <strong>+91 81909 99899</strong>.</p>
+              <p style="margin-top: 30px;">Best regards,<br><strong>Team MAYU EVENTS</strong></p>
+            </div>
+          </div>
+        `
+      }),
+    });
+    const data = await response.json();
+    console.log('📧 Confirmation email sent to client:', data.messageId);
+  } catch (error) {
+    console.error('❌ Confirmation email error:', error.message);
+  }
+};
+
+module.exports = { sendBookingConfirmedEmail,  sendBookingConfirmation, sendAdminNotification, sendWhatsAppConfirmation, verifyEmail };
+
