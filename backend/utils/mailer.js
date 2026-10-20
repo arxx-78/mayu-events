@@ -82,5 +82,21 @@ const verifyEmail = async () => {
   }
 };
 
-module.exports = { sendBookingConfirmation, sendAdminNotification, verifyEmail };
+
+// ========== WHATSAPP FUNCTION (Twilio) ==========
+const sendWhatsAppConfirmation = async (booking) => {
+  try {
+    const message = await twilioClient.messages.create({
+      from: process.env.TWILIO_WHATSAPP_NUMBER || 'whatsapp:+14155238886',
+      to: `whatsapp:+91${booking.phone.replace(/^0+/, '')}`,
+      body: `Hi ${booking.name}, your booking for ${booking.eventType} on ${new Date(booking.date).toLocaleDateString()} is confirmed. Thank you for choosing MAYU EVENTS!`
+    });
+    console.log('📱 WhatsApp sent:', message.sid);
+  } catch (error) {
+    console.error('❌ WhatsApp error:', error.message);
+  }
+};
+
+module.exports = { sendWhatsAppConfirmation,  sendBookingConfirmation, sendAdminNotification, verifyEmail };
+
 
