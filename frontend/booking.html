@@ -600,34 +600,42 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 </script>
 
+
 <script>
+// Toggle booked dates box
 function toggleBookedDates() {
   const content = document.getElementById('bookedDatesContent');
-  content.style.display = content.style.display === 'none' ? 'block' : 'none';
+  if (content.style.display === 'none' || content.style.display === '') {
+    content.style.display = 'block';
+    loadBookedDates(); // Load dates when opened
+  } else {
+    content.style.display = 'none';
+  }
 }
 
+// Load booked dates from backend
 async function loadBookedDates() {
+  const list = document.getElementById('bookedDatesList');
+  list.innerHTML = '<p style="color: #a0a0a0; font-size: 11px;">Loading...</p>';
+  
   try {
     const res = await fetch('https://mayu-events-api.onrender.com/api/bookings/booked-dates');
     const data = await res.json();
     
-    const list = document.getElementById('bookedDatesList');
-    
     if (data.success && data.data.length > 0) {
-      list.innerHTML = data.data.map(date => `
-        <span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 10px; border-radius: 50px; font-size: 10px; border: 1px solid rgba(239,68,68,0.3);">
-          ${new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
-        </span>
-      `).join('');
+      list.innerHTML = data.data.map(date => {
+        const d = new Date(date);
+        const formatted = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+        return `<span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 10px; border-radius: 50px; font-size: 10px; border: 1px solid rgba(239,68,68,0.3);">${formatted}</span>`;
+      }).join('');
     } else {
       list.innerHTML = '<p style="color: #a0a0a0; font-size: 11px;">No booked dates</p>';
     }
   } catch (error) {
     console.error('Booked dates error:', error);
+    list.innerHTML = '<p style="color: #ef4444; font-size: 11px;">Failed to load</p>';
   }
 }
-
-document.addEventListener('DOMContentLoaded', loadBookedDates);
 </script>
 </body>
 </html>
@@ -635,6 +643,7 @@ document.addEventListener('DOMContentLoaded', loadBookedDates);
 
 
 <!-- Trigger deploy -->
+
 
 
 
