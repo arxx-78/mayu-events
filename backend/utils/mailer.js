@@ -145,5 +145,14 @@ const sendBookingConfirmedEmail = async (booking) => {
   }
 };
 
-module.exports = { sendBookingConfirmedEmail,  sendBookingConfirmation, sendAdminNotification, sendWhatsAppConfirmation, verifyEmail };
+
+// ========== SMS FUNCTION (Dummy - no actual SMS sent) ==========
+const sendBookingSMS = async (booking) => {
+  console.log('📱 SMS would be sent to:', booking.phone);
+  // Actual SMS sending code (Fast2SMS) can be added here
+  // For now, just log it to avoid errors
+};
+
+module.exports = { sendBookingSMS,  sendBookingConfirmedEmail,  sendBookingConfirmation, sendAdminNotification, sendWhatsAppConfirmation, verifyEmail };
+
 
