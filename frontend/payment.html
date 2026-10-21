@@ -211,7 +211,7 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
     <p class="sub">Scan QR Code to Pay</p>
     
     <div class="qr-container">
-      <img src="images/payment-qr.png" alt="Payment QR Code">
+      <div id="qrcode"></div>
     </div>
     
     <div class="upi-id">UPI ID: aarasu7661-1@oksbi</div>
@@ -227,6 +227,24 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Generate QR code from UPI ID
+  const upiId = 'aarasu7661-1@oksbi';
+  const upiString = `upi://pay?pa=${upiId}&pn=MAYU%20EVENTS&cu=INR`;
+  
+  new QRCode(document.getElementById("qrcode"), {
+    text: upiString,
+    width: 250,
+    height: 250,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+});
+</script>
 </body>
 </html>
+
 
