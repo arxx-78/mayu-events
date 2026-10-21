@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - MAYU EVENTS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #d4af37;
+  --gold-light: #ffd700;
+  --dark: #0a0a0a;
+  --text: #ffffff;
+  --text-muted: #a0a0a0;
+  --gradient-gold: linear-gradient(135deg, #ffd700 0%, #d4af37 50%, #b8860b 100%);
+}
+body { font-family: 'Poppins', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+h1, h2, h3 { font-family: 'Cinzel', serif; }
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 1000;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 22px; font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.nav-logo img { height: 40px; width: auto; margin-right: 10px; }
+.nav-links { display: flex; gap: 30px; align-items: center; }
+.nav-links a {
+  color: var(--text); text-decoration: none;
+  font-size: 14px; font-weight: 500;
+  transition: all 0.3s; letter-spacing: 1px; text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a.active { color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 5px; }
+
+/* PAYMENT SECTION */
+.payment-section {
+  min-height: 100vh;
+  padding: 140px 20px 80px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%), var(--dark);
+}
+.payment-container {
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  border: 2px solid #d4af37;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+}
+.payment-container h1 {
+  font-size: 32px;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.payment-container .sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+.qr-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  display: inline-block;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.qr-container img {
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  display: block;
+}
+.upi-id {
+  color: var(--gold-light);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.payment-note {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+  margin-bottom: 25px;
+}
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.back-btn:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .navbar { padding: 12px 20px; }
+  .payment-container { padding: 25px 20px; }
+  .qr-container img { width: 220px; height: 220px; }
+  .payment-container h1 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="MAYU EVENTS">
+    MAYU EVENTS
+  </a>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="booking.html">Book Now</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="login.html">Admin</a>
+    <a href="payment.html" class="active">Payment</a>
+  </div>
+</nav>
+
+<section class="payment-section">
+  <div class="payment-container">
+    <h1>PAYMENT</h1>
+    <p class="sub">Scan QR Code to Pay</p>
+    
+    <div class="qr-container">
+      <img src="images/payment-qr.png" alt="Payment QR Code">
+    </div>
+    
+    <div class="upi-id">UPI ID: aarasu7661-1@oksbi</div>
+    <p class="payment-note">After payment, share screenshot on WhatsApp</p>
+    
+    <a href="https://wa.me/918190999899" target="_blank" class="whatsapp-btn">
+      <i class="fab fa-whatsapp"></i> Send Screenshot
+    </a>
+    
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+</section>
+
+</body>
+</html>
