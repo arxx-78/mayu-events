@@ -79,7 +79,7 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   position: relative;
 }
 .booking-container::before {
-  content: '👑'; position: absolute; top: -25px; left: 50%;
+  content: ''; position: absolute; top: -25px; left: 50%;
   transform: translateX(-50%); font-size: 40px;
   background: var(--dark); padding: 0 15px;
 }
@@ -415,7 +415,7 @@ html::before, body::before {
 </section>
 
 <section class="booking-section">
-  <div class="booking-container">
+  <div class="booking-container">`n    <div style="text-align: center; margin-bottom: 20px;"><img src="images/logo.png" alt="MAYU EVENTS" style="height: 100px; width: auto; filter: drop-shadow(0 0 20px rgba(212,175,55,0.6));"></div>
     <h2>Event Booking Form</h2>
     <p class="sub">Fill the details below to start plaing</p>
     
@@ -698,6 +698,7 @@ function toggleMenu() {
 
 
 <!-- Trigger deploy -->
+
 
 
 
