@@ -362,62 +362,16 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 </style>
 
 
+
 <style id="mobile-menu-style">
 @media (max-width: 768px) {
   .navbar { padding: 10px 15px !important; position: relative !important; }
   .nav-logo { font-size: 16px !important; max-width: 70% !important; }
-  .nav-logo img { height: 35px !important; }
-  
-  .nav-links { 
-    display: none !important; 
-    position: absolute !important; 
-    top: 100% !important; 
-    left: 0 !important; 
-    right: 0 !important; 
-    background: rgba(10, 10, 10, 0.98) !important; 
-    backdrop-filter: blur(15px) !important; 
-    flex-direction: column !important; 
-    padding: 20px !important; 
-    gap: 15px !important; 
-    border-bottom: 2px solid #d4af37 !important; 
-    z-index: 999 !important;
-    width: 100% !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-  }
-  
-  .nav-links.active { 
-    display: flex !important; 
-  }
-  
-  .nav-links a { 
-    width: 100% !important; 
-    text-align: center !important; 
-    padding: 12px !important; 
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important; 
-    font-size: 14px !important;
-    color: #ffffff !important;
-  }
-  
-  .nav-links a:last-child { 
-    border-bottom: none !important; 
-  }
-  
-  .nav-links .btn-hero {
-    display: none !important;
-  }
-  
-  .hamburger {
-    display: block !important;
-    background: none !important;
-    border: 2px solid #d4af37 !important;
-    color: #d4af37 !important;
-    padding: 8px 12px !important;
-    border-radius: 8px !important;
-    font-size: 20px !important;
-    cursor: pointer !important;
-    margin-left: auto !important;
-    z-index: 1000 !important;
-  }
+  .nav-links { display: none !important; position: absolute !important; top: 100% !important; left: 0 !important; right: 0 !important; background: rgba(10, 10, 10, 0.98) !important; backdrop-filter: blur(15px) !important; flex-direction: column !important; padding: 20px !important; gap: 15px !important; border-bottom: 2px solid #d4af37 !important; z-index: 999 !important; width: 100% !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
+  .nav-links.active { display: flex !important; }
+  .nav-links a { width: 100% !important; text-align: center !important; padding: 12px !important; border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important; font-size: 14px !important; color: #ffffff !important; }
+  .nav-links .btn-hero { display: none !important; }
+  .hamburger { display: block !important; }
 }
 
 @media (min-width: 769px) {
@@ -433,7 +387,7 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   <div class="nav-logo">
     <img src="images/logo.png" alt="MAYU EVENTS" style="height: 40px; width: auto; margin-right: 10px; filter: drop-shadow(0 0 10px rgba(212,175,55,0.6));"> MAYU EVENTS
   </div>
-  <button class="hamburger" onclick="toggleMenu()" style="display: none; background: none; border: 2px solid #d4af37; color: #d4af37; padding: 8px 12px; border-radius: 8px; font-size: 20px; cursor: pointer; margin-left: auto;">☰</button>`n  <div class="nav-links" id="navLinks">
+  `n  <div class="nav-links" id="navLinks">
     <a href="services.html">Services</a>
     <a href="booking.html">Book Now</a>
     <a href="#contact">Contact</a>
@@ -505,6 +459,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
