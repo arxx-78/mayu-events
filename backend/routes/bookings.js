@@ -13,7 +13,7 @@ router.post('/',
     body('phone').trim().notEmpty().withMessage('Phone required').matches(/^[\d\s+\-()]{7,20}$/),
     body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
     body('eventType').trim().notEmpty().withMessage('Event type required'),
-    body('date').isISO8601().withMessage('Valid date required')
+    body('date').notEmpty().withMessage('Date required')
   ],
   async (req, res) => {
     try {
@@ -167,3 +167,4 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
