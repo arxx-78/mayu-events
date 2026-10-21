@@ -528,12 +528,53 @@ document.addEventListener('DOMContentLoaded', async function() {
   });
 });
 </script>
+<!-- BOOKED DATES BOX -->
+<div id="bookedDatesBox" style="position: fixed; top: 100px; right: 20px; background: linear-gradient(135deg, #1a1a1a, #0a0a0a); border: 2px solid #ef4444; border-radius: 15px; padding: 20px; max-width: 250px; z-index: 1000; box-shadow: 0 10px 30px rgba(239,68,68,0.3); display: none;">
+  <h4 style="color: #ef4444; font-size: 14px; margin-bottom: 10px; font-family: 'Cinzel', serif; letter-spacing: 1px;">
+    <i class="fas fa-calendar-times"></i> Booked Dates
+  </h4>
+  <div id="bookedDatesList" style="display: flex; flex-wrap: wrap; gap: 8px;">
+    <p style="color: #a0a0a0; font-size: 12px;">Loading...</p>
+  </div>
+  <button onclick="closeBookedDatesBox()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; color: #ef4444; font-size: 20px; cursor: pointer;">&times;</button>
+</div>
+<script>
+async function loadBookedDates() {
+  try {
+    const res = await fetch('https://mayu-events-api.onrender.com/api/bookings/booked-dates');
+    const data = await res.json();
+    
+    if (data.success && data.data.length > 0) {
+      const box = document.getElementById('bookedDatesBox');
+      const list = document.getElementById('bookedDatesList');
+      
+      box.style.display = 'block';
+      
+      list.innerHTML = data.data.map(date => `
+        <span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 5px 10px; border-radius: 50px; font-size: 11px; border: 1px solid rgba(239,68,68,0.3);">
+          ${new Date(date).toLocaleDateString()}
+        </span>
+      `).join('');
+    }
+  } catch (error) {
+    console.error('Booked dates error:', error);
+  }
+}
+
+function closeBookedDatesBox() {
+  document.getElementById('bookedDatesBox').style.display = 'none';
+}
+
+// Load on page load
+document.addEventListener('DOMContentLoaded', loadBookedDates);
+</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
 
 
 
