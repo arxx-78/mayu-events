@@ -684,8 +684,9 @@ body::before {
 </style>
 
 
+
 <style id="floating-3d-style">
-/* FLOATING CONTAINER - z-index: 1 to show on top of background */
+/* FLOATING CONTAINER */
 .floating-3d-container {
   position: fixed;
   top: 0; left: 0;
@@ -695,8 +696,9 @@ body::before {
   overflow: hidden;
 }
 
-/* CONTENT SHOULD BE ABOVE FLOATING IMAGES */
-.navbar, .hero, .services-section, .gallery-section, .why-section, .contact-section, .footer {
+/* CONTENT ABOVE FLOATING IMAGES */
+.navbar, .hero, .services-section, .gallery-section, .why-section, .contact-section, .footer,
+.booking-section, .page-header, .login-wrapper, .main {
   position: relative;
   z-index: 2;
 }
@@ -707,11 +709,9 @@ body::before {
   border-radius: 20px;
   background-size: cover;
   background-position: center;
-  box-shadow: 
-    0 20px 60px rgba(0,0,0,0.5),
-    0 0 30px rgba(212,175,55,0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.2);
   border: 2px solid rgba(212,175,55,0.3);
-  opacity: 0.6;
+  opacity: 0.4;
   transform-style: preserve-3d;
 }
 
@@ -734,12 +734,25 @@ body::before {
 @keyframes float3d6 { 0%,100%{transform:translate(0,0) rotateY(0deg) scale(1);} 25%{transform:translate(-50px,40px) rotateY(-25deg) scale(1.1);} 50%{transform:translate(30px,-30px) rotateY(15deg) scale(0.9);} 75%{transform:translate(-40px,-50px) rotateY(-15deg) scale(1.15);} }
 @keyframes float3d7 { 0%,100%{transform:translate(0,0) rotateY(0deg) scale(1);} 25%{transform:translate(40px,50px) rotateY(20deg) scale(1.1);} 50%{transform:translate(-50px,-20px) rotateY(-15deg) scale(0.85);} 75%{transform:translate(20px,-40px) rotateY(10deg) scale(1.05);} }
 @keyframes float3d8 { 0%,100%{transform:translate(0,0) rotateY(0deg) scale(1);} 25%{transform:translate(-60px,-20px) rotateY(-20deg) scale(1.15);} 50%{transform:translate(40px,50px) rotateY(15deg) scale(0.9);} 75%{transform:translate(-30px,30px) rotateY(-10deg) scale(1.1);} }
+
+/* REMOVE BLACK BACKGROUND - MAKE BODY TRANSPARENT */
+body { background: transparent !important; }
 </style>
 </head>
 <body>
 <!-- 3D FLOATING IMAGES -->
 <div class="floating-3d-container">
   <div class="float-3d img-3d-1"></div>
+  <div class="float-3d img-3d-2"></div>
+  <div class="float-3d img-3d-3"></div>
+  <div class="float-3d img-3d-4"></div>
+  <div class="float-3d img-3d-5"></div>
+  <div class="float-3d img-3d-6"></div>
+  <div class="float-3d img-3d-7"></div>
+  <div class="float-3d img-3d-8"></div>
+</div>
+<!-- 3D FLOATING IMAGES -->
+
   <div class="float-3d img-3d-2"></div>
   <div class="float-3d img-3d-3"></div>
   <div class="float-3d img-3d-4"></div>
@@ -923,6 +936,7 @@ function closePaymentModal() {
 </script>
 </body>
 </html>
+
 
 
 
