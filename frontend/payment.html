@@ -147,39 +147,31 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 }
 </style>
 
+
 <style id="responsive-style">
-/* ===== PC VIEW ===== */
 @media (min-width: 769px) {
   .navbar { padding: 15px 50px !important; }
   .payment-section { padding: 120px 20px 60px !important; }
   .payment-container { padding: 40px 35px !important; max-width: 500px !important; }
   .payment-container h1 { font-size: 32px !important; }
   .qr-container { padding: 20px !important; }
-  .qr-container #qrcode { width: 200px !important; height: 200px !important; }
-  .qr-container canvas { width: 200px !important; height: 200px !important; }
+  #qrcode img, #qrcode canvas { width: 180px !important; height: 180px !important; }
   .upi-id { font-size: 18px !important; }
   .payment-note { font-size: 14px !important; }
   .whatsapp-btn { padding: 14px 30px !important; font-size: 14px !important; }
 }
-
-/* ===== MOBILE VIEW ===== */
 @media (max-width: 768px) {
   .navbar { padding: 10px 15px !important; }
   .nav-links { display: none !important; }
   .nav-logo { font-size: 16px !important; }
-
   .payment-section { padding: 90px 15px 40px !important; }
   .payment-container { padding: 25px 20px !important; max-width: 100% !important; }
   .payment-container h1 { font-size: 22px !important; }
   .payment-container .sub { font-size: 11px !important; }
-
   .qr-container { padding: 15px !important; }
-  .qr-container #qrcode { width: 180px !important; height: 180px !important; }
-  .qr-container canvas { width: 180px !important; height: 180px !important; }
-
+  #qrcode img, #qrcode canvas { width: 160px !important; height: 160px !important; }
   .upi-id { font-size: 14px !important; }
   .payment-note { font-size: 11px !important; }
-
   .whatsapp-btn { padding: 12px 25px !important; font-size: 13px !important; width: 100% !important; justify-content: center !important; }
 }
 </style>
@@ -263,6 +255,8 @@ function copyUpiId() {
 </script>
 </body>
 </html>
+
+
 
 
 
