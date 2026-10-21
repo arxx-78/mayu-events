@@ -636,12 +636,54 @@ function toggleMenu() {
   navLinks.classList.toggle('active');
 }
 </script>
+<!-- BOOKED DATES BOX (Simple) -->
+<div id="bookedDatesBox" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  <button onclick="toggleBookedDates()" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 12px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(239,68,68,0.4); display: flex; align-items: center; gap: 8px;">
+    <i class="fas fa-calendar-times"></i> Booked Dates
+  </button>
+  
+  <div id="bookedDatesContent" style="display: none; background: linear-gradient(135deg, #1a1a1a, #0a0a0a); border: 2px solid #ef4444; border-radius: 15px; padding: 15px; margin-top: 10px; max-width: 280px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div id="bookedDatesList" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 200px; overflow-y: auto;">
+      <p style="color: #a0a0a0; font-size: 11px;">Loading...</p>
+    </div>
+  </div>
+</div>
+<script>
+function toggleBookedDates() {
+  const content = document.getElementById('bookedDatesContent');
+  content.style.display = content.style.display === 'none' ? 'block' : 'none';
+}
+
+async function loadBookedDates() {
+  try {
+    const res = await fetch('https://mayu-events-api.onrender.com/api/bookings/booked-dates');
+    const data = await res.json();
+    
+    const list = document.getElementById('bookedDatesList');
+    
+    if (data.success && data.data.length > 0) {
+      list.innerHTML = data.data.map(date => `
+        <span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 10px; border-radius: 50px; font-size: 10px; border: 1px solid rgba(239,68,68,0.3);">
+          ${new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+        </span>
+      `).join('');
+    } else {
+      list.innerHTML = '<p style="color: #a0a0a0; font-size: 11px;">No booked dates</p>';
+    }
+  } catch (error) {
+    console.error('Booked dates error:', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadBookedDates);
+</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
 
 
 
