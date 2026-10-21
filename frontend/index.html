@@ -617,6 +617,71 @@ body::before {
   50% { transform: translate(40px, 50px) rotate(-12deg); }
 }
 </style>
+<style id="responsive-style">
+/* ===== PC VIEW ===== */
+@media (min-width: 769px) {
+  .hero { padding: 100px 20px 60px !important; }
+  .hero h1 { font-size: 70px !important; letter-spacing: 3px !important; }
+  .hero-tagline { font-size: 22px !important; }
+  .hero-subtitle { font-size: 14px !important; }
+  .hero-services-line { font-size: 12px !important; gap: 30px !important; }
+  .hero-logo img { height: 100px !important; }
+  .nav-logo { font-size: 20px !important; }
+  .nav-links a { font-size: 12px !important; }
+  .section-header h2 { font-size: 36px !important; }
+  .service-card h3 { font-size: 13px !important; }
+  .contact-item h4 { font-size: 13px !important; }
+  .contact-item p { font-size: 13px !important; }
+  .footer-logo { font-size: 24px !important; }
+}
+
+/* ===== MOBILE VIEW ===== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 10px 15px !important; }
+  .nav-logo { font-size: 16px !important; }
+  .nav-links { display: none !important; }
+
+  /* Hero */
+  .hero { padding: 90px 15px 40px !important; min-height: auto !important; }
+  .hero h1 { font-size: 40px !important; letter-spacing: 1px !important; }
+  .hero-tagline { font-size: 16px !important; }
+  .hero-subtitle { font-size: 11px !important; }
+  .hero-services-line { font-size: 9px !important; gap: 8px !important; flex-wrap: wrap !important; justify-content: center !important; }
+  .hero-services-line .dot { display: none !important; }
+  .hero-logo img { height: 60px !important; }
+
+  /* Buttons */
+  .hero-cta { flex-direction: column !important; gap: 12px !important; width: 100%; max-width: 300px; margin: 0 auto; }
+  .btn-hero { width: 100% !important; justify-content: center !important; padding: 12px 20px !important; font-size: 11px !important; }
+
+  /* Gallery */
+  .gallery-section { padding: 40px 15px !important; }
+  .section-header h2 { font-size: 28px !important; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .gallery-overlay { padding: 8px !important; font-size: 12px !important; }
+
+  /* Why Choose Us */
+  .why-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .why-card { padding: 15px 10px !important; }
+  .why-card i { font-size: 24px !important; }
+  .why-card h3 { font-size: 12px !important; }
+  .why-card p { font-size: 10px !important; }
+
+  /* Contact */
+  .contact-section { padding: 40px 15px !important; }
+  .contact-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .contact-item { padding: 20px 10px !important; }
+  .contact-item i { font-size: 24px !important; }
+  .contact-item h4 { font-size: 12px !important; }
+  .contact-item p { font-size: 11px !important; }
+
+  /* Footer */
+  .footer-logo { font-size: 18px !important; }
+  .footer-tagline { font-size: 10px !important; }
+  .footer-bottom { font-size: 9px !important; }
+}
+</style>
 </head>
 <body>
 <!-- FLOATING BACKGROUND IMAGES -->
@@ -775,6 +840,7 @@ function closePaymentModal() {
 </script>
 </body>
 </html>
+
 
 
 
