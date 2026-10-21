@@ -57,7 +57,7 @@ router.post('/',
         // Send notifications in background (non-blocking)
         // This ensures email is only sent AFTER database save
         sendBookingConfirmation(booking).catch(console.error);
-        sendAdminNotification(booking).catch(console.error);
+        
         sendBookingSMS(booking).catch(console.error);
         sendWhatsAppConfirmation(booking).catch(console.error);
       }
@@ -173,5 +173,6 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
