@@ -219,8 +219,8 @@ html::before, body::before {
   pointer-events: none;
 }
 </style>
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+
 </head>
 <body>
 
@@ -297,18 +297,7 @@ html::before, body::before {
       </div>
     </div>
   </div>
-<!-- CALENDAR SECTION -->
-<div class="card" id="calendarCard" style="margin-top: 25px;">
-  <div class="card-header">
-    <h2><i class="fas fa-calendar-alt"></i> Booking Calendar</h2>
-    <div style="display:flex; gap:10px;">
-      <button class="btn btn-primary btn-sm" onclick="loadCalendar()"><i class="fas fa-sync"></i> Refresh</button>
-    </div>
-  </div>
-  <div style="padding: 20px;">
-    <div id="calendar"></div>
-  </div>
-</div>
+
 <!-- AVAILABLE DATES SECTION -->
 <div class="card" id="availableDatesCard" style="margin-top: 25px;">
   <div class="card-header">
@@ -697,6 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
