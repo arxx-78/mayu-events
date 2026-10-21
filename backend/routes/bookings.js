@@ -56,10 +56,10 @@ router.post('/',
       if (booking && booking._id) {
         // Send notifications in background (non-blocking)
         // This ensures email is only sent AFTER database save
-        sendBookingConfirmation(booking).catch(console.error);
         
-        sendBookingSMS(booking).catch(console.error);
-        sendWhatsAppConfirmation(booking).catch(console.error);
+        
+        
+        
       }
 
       // 3. Send success response
@@ -152,6 +152,7 @@ router.put('/:id', protect, async (req, res) => {
 
     // If status changed to "confirmed", send email to client
     if (!wasConfirmed && isNowConfirmed) {
+      console.log('✅ Admin confirmed booking. Sending email to client...');
       sendBookingConfirmedEmail(booking).catch(console.error);
     }
 
@@ -173,6 +174,7 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 
