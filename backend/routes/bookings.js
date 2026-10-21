@@ -22,10 +22,22 @@ if (req.body.date && typeof req.body.date === 'string' && req.body.date.includes
   }
 }
 
-// Check if date is already booked (confirmed)
+// Convert date to proper format
+let bookingDate = req.body.date;
+if (typeof bookingDate === 'string' && bookingDate.includes('/')) {
+  const parts = bookingDate.split('/');
+  if (parts.length === 3) {
+    bookingDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  }
+}
+req.body.date = bookingDate;
+
+// Check if date is already booked
 const existingBooking = await Booking.findOne({
-  date: new Date(req.body.date),
-  status: { $in: ['new', 'contacted', 'confirmed'] }
+  date: {
+    $gte: new Date(bookingDate).setHours(0,0,0,0),
+    $lt: new Date(bookingDate).setHours(23,59,59,999)
+  }
 });
 
 if (existingBooking) {
@@ -141,6 +153,7 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 
