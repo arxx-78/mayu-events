@@ -45,18 +45,24 @@ router.post('/',
         });
       }
 
+      // 1. Save booking to database first
       const booking = await Booking.create({
         ...req.body,
         ipAddress: req.ip,
         userAgent: req.get('user-agent') || ''
       });
 
-      // Send notifications (non-blocking)
-      sendBookingConfirmation(booking).catch(console.error);
-      sendAdminNotification(booking).catch(console.error);
-      sendBookingSMS(booking).catch(console.error);
-      sendWhatsAppConfirmation(booking).catch(console.error);
+      // 2. Only send notifications if booking saved successfully
+      if (booking && booking._id) {
+        // Send notifications in background (non-blocking)
+        // This ensures email is only sent AFTER database save
+        sendBookingConfirmation(booking).catch(console.error);
+        sendAdminNotification(booking).catch(console.error);
+        sendBookingSMS(booking).catch(console.error);
+        sendWhatsAppConfirmation(booking).catch(console.error);
+      }
 
+      // 3. Send success response
       res.status(201).json({
         success: true,
         message: 'Booking received! We will contact you within 30 minutes.',
@@ -167,4 +173,5 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
