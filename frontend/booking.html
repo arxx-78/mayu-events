@@ -315,20 +315,70 @@ html::before, body::before {
 }
 </style>
 
+
 <style id="mobile-menu-style">
+/* Hamburger button - hidden on PC */
+.hamburger {
+  display: none;
+  background: none;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  z-index: 1001;
+}
+
+/* PC View */
+@media (min-width: 769px) {
+  .hamburger { display: none !important; }
+  .nav-links {
+    display: flex !important;
+    position: static !important;
+    background: transparent !important;
+    flex-direction: row !important;
+    gap: 30px !important;
+  }
+}
+
+/* Mobile View */
 @media (max-width: 768px) {
   .navbar { padding: 10px 15px !important; position: relative !important; }
   .nav-logo { font-size: 16px !important; max-width: 70% !important; }
-  .nav-links { display: none !important; position: absolute !important; top: 100% !important; left: 0 !important; right: 0 !important; background: rgba(10, 10, 10, 0.98) !important; backdrop-filter: blur(15px) !important; flex-direction: column !important; padding: 20px !important; gap: 15px !important; border-bottom: 2px solid #d4af37 !important; z-index: 999 !important; width: 100% !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
-  .nav-links.active { display: flex !important; }
-  .nav-links a { width: 100% !important; text-align: center !important; padding: 12px !important; border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important; font-size: 14px !important; color: #ffffff !important; }
-  .nav-links .btn-hero { display: none !important; }
+  .nav-logo img { height: 35px !important; }
   .hamburger { display: block !important; }
-}
-
-@media (min-width: 769px) {
-  .hamburger { display: none !important; }
-  .nav-links { display: flex !important; position: static !important; background: transparent !important; flex-direction: row !important; }
+  
+  .nav-links {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(10, 10, 10, 0.98) !important;
+    backdrop-filter: blur(15px) !important;
+    flex-direction: column !important;
+    padding: 20px !important;
+    gap: 15px !important;
+    border-bottom: 2px solid #d4af37 !important;
+    z-index: 999 !important;
+    width: 100% !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+  }
+  
+  .nav-links.active { display: flex !important; }
+  
+  .nav-links a {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 12px !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    font-size: 14px !important;
+    color: #ffffff !important;
+  }
+  
+  .nav-links a:last-child { border-bottom: none !important; }
 }
 </style>
 </head>
@@ -345,12 +395,17 @@ html::before, body::before {
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><i class="fas fa-crown"></i> MAYU EVENTS</a>
-  `n  <button class="hamburger" onclick="toggleMenu()" style="display: none; background: none; border: 2px solid #d4af37; color: #d4af37; padding: 8px 12px; border-radius: 8px; font-size: 20px; cursor: pointer; margin-left: auto; z-index: 1001;">☰</button>`n  <div class="nav-links" id="navLinks">
-    <a href="index.html#services">Services</a>
-    <a href="booking.html" class="active">Book Now</a>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="MAYU EVENTS" style="height: 40px; width: auto;">
+    MAYU EVENTS
+  </a>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="services.html">Services</a>
+    <a href="booking.html">Book Now</a>
     <a href="index.html#contact">Contact</a>
     <a href="login.html">Admin</a>
+    <a href="payment.html">Payment</a>
   </div>
 </nav>
 
@@ -362,7 +417,7 @@ html::before, body::before {
 <section class="booking-section">
   <div class="booking-container">
     <h2>Event Booking Form</h2>
-    <p class="sub">Fill the details below to start planning</p>
+    <p class="sub">Fill the details below to start plaing</p>
     
     <form class="booking-form" id="mainBookingForm" autocomplete="off">
       <div class="form-row">
@@ -507,9 +562,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = formData;
       const API_URL = 'https://mayu-events-api.onrender.com/api/bookings';
 
-      const originalText = submitBtn.innerHTML;
+      const originalText = submitBtn.ierHTML;
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing... Please wait...';
+      submitBtn.ierHTML = '<i class="fas fa-spier fa-spin"></i> Processing... Please wait...';
 
       try {
         const response = await fetch(API_URL, {
@@ -542,7 +597,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        submitBtn.ierHTML = originalText;
       }
     });
   }
@@ -610,25 +665,31 @@ function toggleBookedDates() {
 // Load booked dates from backend
 async function loadBookedDates() {
   const list = document.getElementById('bookedDatesList');
-  list.innerHTML = '<p style="color: #a0a0a0; font-size: 11px;">Loading...</p>';
+  list.ierHTML = '<p style="color: #a0a0a0; font-size: 11px;">Loading...</p>';
   
   try {
     const res = await fetch('https://mayu-events-api.onrender.com/api/bookings/booked-dates');
     const data = await res.json();
     
     if (data.success && data.data.length > 0) {
-      list.innerHTML = data.data.map(date => {
+      list.ierHTML = data.data.map(date => {
         const d = new Date(date);
         const formatted = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
         return `<span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 10px; border-radius: 50px; font-size: 10px; border: 1px solid rgba(239,68,68,0.3);">${formatted}</span>`;
       }).join('');
     } else {
-      list.innerHTML = '<p style="color: #a0a0a0; font-size: 11px;">No booked dates</p>';
+      list.ierHTML = '<p style="color: #a0a0a0; font-size: 11px;">No booked dates</p>';
     }
   } catch (error) {
     console.error('Booked dates error:', error);
-    list.innerHTML = '<p style="color: #ef4444; font-size: 11px;">Failed to load</p>';
+    list.ierHTML = '<p style="color: #ef4444; font-size: 11px;">Failed to load</p>';
   }
+}
+</script>
+<script>
+function toggleMenu() {
+  const navLinks = document.getElementById('navLinks');
+  navLinks.classList.toggle('active');
 }
 </script>
 </body>
@@ -637,6 +698,7 @@ async function loadBookedDates() {
 
 
 <!-- Trigger deploy -->
+
 
 
 
