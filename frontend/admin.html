@@ -540,72 +540,11 @@ document.getElementById('statusFilter')?.addEventListener('change', loadBookings
 
 loadBookings();
 </script>
-<script>
-let calendarInstance = null;
 
-async function loadCalendar() {
-  try {
-    // Fetch all bookings
-    const res = await API.getBookings();
-    const bookings = res.data || [];
-
-    // Group bookings by date
-    const events = bookings.map(b => ({
-      title: `${b.name} - ${b.eventType}`,
-      start: b.date,
-      backgroundColor: b.status === 'confirmed' ? '#10b981' : '#f59e0b',
-      borderColor: b.status === 'confirmed' ? '#10b981' : '#f59e0b',
-      textColor: '#ffffff',
-      extendedProps: {
-        status: b.status,
-        name: b.name,
-        eventType: b.eventType,
-        phone: b.phone
-      }
-    }));
-
-    // Destroy old calendar if exists
-    if (calendarInstance) {
-      calendarInstance.destroy();
-    }
-
-    // Create new calendar
-    const calendarEl = document.getElementById('calendar');
-    calendarInstance = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,listWeek'
-      },
-      events: events,
-      eventClick: function(info) {
-        alert(`Booking: ${info.event.title}\nStatus: ${info.event.extendedProps.status}\nPhone: ${info.event.extendedProps.phone}`);
-      },
-      dateClick: function(info) {
-        alert(`Date: ${info.dateStr}\nBookings: ${events.filter(e => e.start === info.dateStr).length}`);
-      },
-      height: 'auto',
-      themeSystem: 'standard'
-    });
-
-    calendarInstance.render();
-    console.log('✅ Calendar loaded with', events.length, 'bookings');
-
-  } catch (error) {
-    console.error('❌ Calendar error:', error);
-    alert('Failed to load calendar');
-  }
-}
-
-// Load calendar on page load (after a delay to ensure DOM is ready)
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(loadCalendar, 1000);
-});
-</script>
 
 </body>
 </html>
+
 
 
 
