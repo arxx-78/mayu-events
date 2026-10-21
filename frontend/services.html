@@ -115,14 +115,64 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 }
 </style>
 
+
 <style id="mobile-menu-style">
-.hamburger { display: none; }
 @media (max-width: 768px) {
-  .hamburger { display: block !important; }
-  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(15px); flex-direction: column; padding: 20px; gap: 15px; border-bottom: 2px solid #d4af37; z-index: 999; }
-  .nav-links.active { display: flex !important; }
-  .nav-links a { width: 100%; text-align: center; padding: 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-  .nav-links a:last-child { border-bottom: none; }
+  .navbar { padding: 10px 15px !important; position: relative !important; }
+  .nav-logo { font-size: 16px !important; max-width: 70% !important; }
+  .nav-logo img { height: 35px !important; }
+  
+  /* Hide nav links by default on mobile */
+  .nav-links { 
+    display: none !important; 
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    right: 0; 
+    background: rgba(10, 10, 10, 0.98); 
+    backdrop-filter: blur(15px); 
+    flex-direction: column !important; 
+    padding: 20px; 
+    gap: 15px !important; 
+    border-bottom: 2px solid #d4af37; 
+    z-index: 999;
+    width: 100% !important;
+  }
+  
+  .nav-links.active { 
+    display: flex !important; 
+  }
+  
+  .nav-links a { 
+    width: 100% !important; 
+    text-align: center !important; 
+    padding: 10px !important; 
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2); 
+    font-size: 14px !important;
+  }
+  
+  .nav-links a:last-child { 
+    border-bottom: none !important; 
+  }
+  
+  /* Hide the old BOOK NOW button in mobile */
+  .nav-links .btn-hero {
+    display: none !important;
+  }
+  
+  /* Hamburger button */
+  .hamburger {
+    display: block !important;
+    background: none !important;
+    border: 2px solid #d4af37 !important;
+    color: #d4af37 !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    margin-left: auto !important;
+    z-index: 1000 !important;
+  }
 }
 </style>
 </head>
@@ -191,6 +241,7 @@ function toggleMenu() {
 </script>
 </body>
 </html>
+
 
 
 
