@@ -579,12 +579,54 @@ function closeBookedDatesBox() {
 // Load on page load
 document.addEventListener('DOMContentLoaded', loadBookedDates);
 </script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+  // Fetch booked dates from backend
+  let bookedDates = [];
+  try {
+    const res = await fetch('https://mayu-events-api.onrender.com/api/bookings/booked-dates');
+    const data = await res.json();
+    if (data.success) {
+      bookedDates = data.data;
+      console.log('Booked dates:', bookedDates);
+    }
+  } catch (err) {
+    console.error('Failed to load booked dates:', err);
+  }
+
+  // Initialize Flatpickr with disabled dates
+  flatpickr("#eventDate", {
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    allowInput: true,
+    disable: bookedDates,
+    onDayCreate: function(dObj, dStr, fp, dayElem) {
+      // Mark booked dates as red
+      const dateStr = dayElem.dateObj.toISOString().split('T')[0];
+      if (bookedDates.includes(dateStr)) {
+        dayElem.style.backgroundColor = 'rgba(239, 68, 68, 0.3)';
+        dayElem.style.color = '#ef4444';
+        dayElem.style.borderRadius = '50%';
+        dayElem.title = 'This date is already booked';
+      }
+    },
+    onChange: function(selectedDates, dateStr, instance) {
+      if (bookedDates.includes(dateStr)) {
+        alert('❌ This date is already booked. Please choose a different date.');
+        instance.clear();
+      }
+    }
+  });
+});
+</script>
 </body>
 </html>
 
 
 
 <!-- Trigger deploy -->
+
 
 
 
