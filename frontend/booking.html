@@ -488,7 +488,11 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(res.message || 'Failed to save booking');
         }
       } catch (err) {
-        alert('❌ Failed to save booking. Please try again.');
+        if (err.message.includes('already booked')) {
+          alert('❌ ' + err.message);
+        } else {
+          alert('❌ Failed to save booking. Please try again.');
+        }
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
@@ -507,6 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <!-- Trigger deploy -->
+
 
 
 

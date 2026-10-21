@@ -22,6 +22,20 @@ if (req.body.date && typeof req.body.date === 'string' && req.body.date.includes
   }
 }
 
+// Check if date is already booked (confirmed)
+const existingBooking = await Booking.findOne({
+  date: new Date(req.body.date),
+  status: { $in: ['new', 'contacted', 'confirmed'] }
+});
+
+if (existingBooking) {
+  return res.status(400).json({
+    success: false,
+    message: 'This date is already booked by another customer. Please choose a different date.',
+    bookedDate: existingBooking.date
+  });
+}
+
 const booking = await Booking.create({
         ...req.body,
         ipAddress: req.ip,
@@ -127,6 +141,7 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 
