@@ -259,7 +259,7 @@ form.addEventListener('submit', async (e) => {
   const btn = form.querySelector('button[type="submit"]');
   const original = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Server waking up... Please wait...';
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Please wait...';
   errBox.classList.remove('show');
 
   try {
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const original = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Server waking up... Please wait...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Please wait...';
     errBox.classList.remove('show');
 
     try {
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
           if ((err.message === 'SERVER_WAKING_UP' || err.message === 'EMPTY_RESPONSE' || err.message.includes('fetch')) && retries < maxRetries) {
             retries++;
-            errBox.textContent = `⏳ Server is waking up. Please wait... (Attempt ${retries}/${maxRetries})`;
+            errBox.textContent = `⏳ Please wait. Please wait... (Attempt ${retries}/${maxRetries})`;
             errBox.classList.add('show');
             // Wait 10 seconds before retrying
             await new Promise(r => setTimeout(r, 10000));
@@ -368,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
