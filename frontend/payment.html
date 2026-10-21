@@ -175,6 +175,16 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   .whatsapp-btn { padding: 12px 25px !important; font-size: 13px !important; width: 100% !important; justify-content: center !important; }
 }
 </style>
+<style id="mobile-menu-style">
+.hamburger { display: none; }
+@media (max-width: 768px) {
+  .hamburger { display: block !important; }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(15px); flex-direction: column; padding: 20px; gap: 15px; border-bottom: 2px solid #d4af37; z-index: 999; }
+  .nav-links.active { display: flex !important; }
+  .nav-links a { width: 100%; text-align: center; padding: 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+  .nav-links a:last-child { border-bottom: none; }
+}
+</style>
 </head>
 <body>
 
@@ -183,7 +193,7 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
     <img src="images/logo.png" alt="MAYU EVENTS">
     MAYU EVENTS
   </a>
-  <div class="nav-links">
+  <button class="hamburger" onclick="toggleMenu()" style="display: none; background: none; border: 2px solid #d4af37; color: #d4af37; padding: 8px 12px; border-radius: 8px; font-size: 20px; cursor: pointer; margin-left: auto;">☰</button>`n  <div class="nav-links" id="navLinks">
     <a href="services.html">Services</a>
     <a href="booking.html">Book Now</a>
     <a href="index.html#contact">Contact</a>
@@ -253,8 +263,15 @@ function copyUpiId() {
   });
 }
 </script>
+<script>
+function toggleMenu() {
+  const navLinks = document.getElementById('navLinks');
+  navLinks.classList.toggle('active');
+}
+</script>
 </body>
 </html>
+
 
 
 
