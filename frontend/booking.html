@@ -337,6 +337,41 @@ html::before, body::before {
   }
 }
 </style>
+<style id="responsive-style">
+/* ===== PC VIEW ===== */
+@media (min-width: 769px) {
+  .page-header { padding: 100px 20px 40px !important; }
+  .page-header h1 { font-size: 60px !important; letter-spacing: 2px !important; }
+  .page-header p { font-size: 14px !important; letter-spacing: 2px !important; }
+  .booking-container { padding: 40px 35px !important; max-width: 800px !important; }
+  .booking-container h2 { font-size: 28px !important; }
+  .booking-container .sub { font-size: 12px !important; }
+}
+
+/* ===== MOBILE VIEW ===== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 10px 15px !important; }
+  .nav-logo { font-size: 16px !important; max-width: 70% !important; }
+  .nav-links { display: none !important; }
+  .hamburger { display: block !important; }
+
+  /* Header */
+  .page-header { padding: 80px 15px 30px !important; }
+  .page-header h1 { font-size: 32px !important; letter-spacing: 1px !important; }
+  .page-header p { font-size: 11px !important; letter-spacing: 1px !important; }
+
+  /* Booking Form */
+  .booking-container { padding: 25px 15px !important; margin: 0 10px !important; }
+  .booking-container h2 { font-size: 22px !important; }
+  .booking-container .sub { font-size: 10px !important; }
+  .form-row { grid-template-columns: 1fr !important; gap: 0 !important; }
+  .form-group { margin-bottom: 15px !important; }
+  .form-group label { font-size: 11px !important; }
+  .form-group input, .form-group select, .form-group textarea { padding: 12px 14px !important; font-size: 13px !important; }
+  .booking-submit { padding: 14px !important; font-size: 13px !important; }
+}
+</style>
 </head>
 <body>
 <!-- 3D FLOATING IMAGES -->
@@ -643,6 +678,7 @@ async function loadBookedDates() {
 
 
 <!-- Trigger deploy -->
+
 
 
 
