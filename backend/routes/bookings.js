@@ -1,7 +1,7 @@
 ﻿const express = require('express');
 const { body, validationResult } = require('express-validator');
 const Booking = require('../models/Booking');
-const { sendBookingConfirmation, sendAdminNotification, sendBookingSMS, sendWhatsAppConfirmation, sendBookingConfirmedEmail } = require('../utils/mailer');
+const { sendBookingConfirmation, sendAdminNotification, sendBookingSMS, sendWhatsAppConfirmation, sendBookingConfirmedEmail, sendBookingCancelledEmail } = require('../utils/mailer');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -142,7 +142,9 @@ router.put('/:id', protect, async (req, res) => {
     if (!oldBooking) return res.status(404).json({ success: false, message: 'Booking not found' });
 
     const wasConfirmed = oldBooking.status === 'confirmed';
+    const wasCancelled = oldBooking.status === 'cancelled';
     const isNowConfirmed = req.body.status === 'confirmed';
+    const isNowCancelled = req.body.status === 'cancelled';
 
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
@@ -150,10 +152,16 @@ router.put('/:id', protect, async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    // If status changed to "confirmed", send email to client
+    // If status changed to "confirmed", send confirmation email
     if (!wasConfirmed && isNowConfirmed) {
       console.log('✅ Admin confirmed booking. Sending email to client...');
       sendBookingConfirmedEmail(booking).catch(console.error);
+    }
+
+    // If status changed to "cancelled", send cancellation email
+    if (!wasCancelled && isNowCancelled) {
+      console.log('❌ Admin cancelled booking. Sending email to client...');
+      sendBookingCancelledEmail(booking).catch(console.error);
     }
 
     res.json({ success: true, data: booking });
@@ -190,6 +198,8 @@ router.get('/booked-dates', async (req, res) => {
 });
 
 module.exports = router;
+
+
 
 
 
