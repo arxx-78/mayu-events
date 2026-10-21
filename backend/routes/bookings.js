@@ -1,71 +1,65 @@
 ﻿const express = require('express');
-const { validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const Booking = require('../models/Booking');
-const { sendBookingConfirmation, sendAdminNotification } = require('../utils/mailer');
+const { sendBookingConfirmation, sendAdminNotification, sendBookingSMS, sendWhatsAppConfirmation, sendBookingConfirmedEmail } = require('../utils/mailer');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+// ============ PUBLIC: Create booking ============
+router.post('/',
+  [
+    body('name').trim().notEmpty().withMessage('Name required').isLength({ max: 100 }),
+    body('phone').trim().notEmpty().withMessage('Phone required').matches(/^[\d\s+\-()]{7,20}$/),
+    body('email').isEmail().normalizeEmail().withMessage('Valid email required'),
+    body('eventType').trim().notEmpty().withMessage('Event type required'),
+    body('date').isISO8601().withMessage('Valid date required')
+  ],
+  async (req, res) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, errors: errors.array() });
       }
 
-      // Convert date to proper format if needed
-if (req.body.date && typeof req.body.date === 'string' && req.body.date.includes('/')) {
-  const parts = req.body.date.split('/');
-  if (parts.length === 3) {
-    req.body.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
-    console.log('Date converted in backend:', req.body.date);
-  }
-}
+      // Convert date to proper format (DD/MM/YYYY to YYYY-MM-DD)
+      let bookingDate = req.body.date;
+      if (typeof bookingDate === 'string' && bookingDate.includes('/')) {
+        const parts = bookingDate.split('/');
+        if (parts.length === 3) {
+          bookingDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+      }
+      req.body.date = bookingDate;
 
-// Convert date to proper format
-let bookingDate = req.body.date;
-if (typeof bookingDate === 'string' && bookingDate.includes('/')) {
-  const parts = bookingDate.split('/');
-  if (parts.length === 3) {
-    bookingDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-  }
-}
-req.body.date = bookingDate;
+      // Check if date is already booked
+      const existingBooking = await Booking.findOne({
+        date: new Date(bookingDate),
+        status: { $in: ['new', 'contacted', 'confirmed'] }
+      });
 
-if (existingBooking) {
-  return res.status(400).json({
-    success: false,
-    message: 'This date is already booked by another customer. Please choose a different date.',
-    bookedDate: existingBooking.date
-  });
-}
+      if (existingBooking) {
+        return res.status(400).json({
+          success: false,
+          message: 'This date is already booked by another customer. Please choose a different date.'
+        });
+      }
 
-// Check if date is already booked
-const existingBooking = await Booking.findOne({
-  date: new Date(req.body.date),
-  status: { $in: ['new', 'contacted', 'confirmed'] }
-});
-
-if (existingBooking) {
-  return res.status(400).json({
-    success: false,
-    message: 'This date is already booked by another customer. Please choose a different date.'
-  });
-}
-
-const booking = await Booking.create({
+      const booking = await Booking.create({
         ...req.body,
         ipAddress: req.ip,
         userAgent: req.get('user-agent') || ''
       });
 
-      // Send emails (Wait for them to finish)
-      await sendBookingConfirmation(booking).catch(err => console.error('Customer email error:', err));
-      await sendAdminNotification(booking).catch(err => console.error('Admin email error:', err));
+      // Send notifications (non-blocking)
+      sendBookingConfirmation(booking).catch(console.error);
+      sendAdminNotification(booking).catch(console.error);
+      sendBookingSMS(booking).catch(console.error);
+      sendWhatsAppConfirmation(booking).catch(console.error);
 
       res.status(201).json({
         success: true,
-        message: 'Booking confirmed! Check your email for details.',
+        message: 'Booking received! We will contact you within 30 minutes.',
         data: { id: booking._id, name: booking.name }
       });
     } catch (error) {
@@ -75,6 +69,7 @@ const booking = await Booking.create({
   }
 );
 
+// ============ ADMIN: Get all bookings ============
 router.get('/', protect, async (req, res) => {
   try {
     const { status, eventType, search, page = 1, limit = 50 } = req.query;
@@ -102,6 +97,7 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
+// ============ ADMIN: Get stats ============
 router.get('/stats', protect, async (req, res) => {
   try {
     const total = await Booking.countDocuments();
@@ -133,20 +129,33 @@ router.get('/stats', protect, async (req, res) => {
   }
 });
 
+// ============ ADMIN: Update booking ============
 router.put('/:id', protect, async (req, res) => {
   try {
+    const oldBooking = await Booking.findById(req.params.id);
+    if (!oldBooking) return res.status(404).json({ success: false, message: 'Booking not found' });
+
+    const wasConfirmed = oldBooking.status === 'confirmed';
+    const isNowConfirmed = req.body.status === 'confirmed';
+
     const booking = await Booking.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
-    if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
+
+    // If status changed to "confirmed", send email to client
+    if (!wasConfirmed && isNowConfirmed) {
+      sendBookingConfirmedEmail(booking).catch(console.error);
+    }
+
     res.json({ success: true, data: booking });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
+// ============ ADMIN: Delete booking ============
 router.delete('/:id', protect, async (req, res) => {
   try {
     const booking = await Booking.findByIdAndDelete(req.params.id);
@@ -158,14 +167,3 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
