@@ -452,9 +452,27 @@ html::before, body::before {
 
       <div class="form-row">
         <div class="form-group">
-          <label>Event Date *</label>
-          <input type="text" name="date" id="eventDate" placeholder="YYYY-MM-DD" required autocomplete="off" style="color: white; background: rgba(10,10,10,0.8); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 14px 18px; font-family: inherit; font-size: 14px; width: 100%;">
+          <label>From Date *</label>
+          <input type="text" name="fromDate" id="fromDate" placeholder="YYYY-MM-DD" required autocomplete="off" style="color: white; background: rgba(10,10,10,0.8); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 14px 18px; font-family: inherit; font-size: 14px; width: 100%;">
         </div>
+        <div class="form-group">
+          <label>To Date *</label>
+          <input type="text" name="toDate" id="toDate" placeholder="YYYY-MM-DD" required autocomplete="off" style="color: white; background: rgba(10,10,10,0.8); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 14px 18px; font-family: inherit; font-size: 14px; width: 100%;">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>From Time *</label>
+          <input type="time" name="fromTime" id="fromTime" required style="color: white; background: rgba(10,10,10,0.8); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 14px 18px; font-family: inherit; font-size: 14px; width: 100%;">
+        </div>
+        <div class="form-group">
+          <label>To Time *</label>
+          <input type="time" name="toTime" id="toTime" required style="color: white; background: rgba(10,10,10,0.8); border: 1.5px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 14px 18px; font-family: inherit; font-size: 14px; width: 100%;">
+        </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <label>Number of Guests</label>
           <select name="guests">
@@ -547,11 +565,19 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const formData = Object.fromEntries(new FormData(form));
       
-      // Convert date format
-      if (formData.date) {
-        const parts = formData.date.split('/');
-        if (parts.length === 3) {
-          formData.date = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      // Validate date range
+      if (formData.fromDate && formData.toDate) {
+        if (new Date(formData.toDate) < new Date(formData.fromDate)) {
+          alert('❌ To Date cannot be before From Date.');
+          return;
+        }
+      }
+      
+      // Validate time range
+      if (formData.fromTime && formData.toTime) {
+        if (formData.toTime <= formData.fromTime) {
+          alert('❌ To Time must be after From Time.');
+          return;
         }
       }
       
@@ -694,6 +720,9 @@ function toggleMenu() {
 
 
 <!-- Trigger deploy -->
+
+
+
 
 
 
