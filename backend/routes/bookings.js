@@ -173,7 +173,24 @@ router.delete('/:id', protect, async (req, res) => {
   }
 });
 
+
+// ============ PUBLIC: Get booked dates ============
+router.get('/booked-dates', async (req, res) => {
+  try {
+    const bookings = await Booking.find({
+      status: { $in: ['new', 'contacted', 'confirmed'] }
+    }).select('date');
+
+    const bookedDates = bookings.map(b => new Date(b.date).toISOString().split('T')[0]);
+
+    res.json({ success: true, data: bookedDates });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 module.exports = router;
+
 
 
 
