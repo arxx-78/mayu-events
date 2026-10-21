@@ -32,19 +32,24 @@ if (typeof bookingDate === 'string' && bookingDate.includes('/')) {
 }
 req.body.date = bookingDate;
 
-// Check if date is already booked
-const existingBooking = await Booking.findOne({
-  date: {
-    $gte: new Date(bookingDate).setHours(0,0,0,0),
-    $lt: new Date(bookingDate).setHours(23,59,59,999)
-  }
-});
-
 if (existingBooking) {
   return res.status(400).json({
     success: false,
     message: 'This date is already booked by another customer. Please choose a different date.',
     bookedDate: existingBooking.date
+  });
+}
+
+// Check if date is already booked
+const existingBooking = await Booking.findOne({
+  date: new Date(req.body.date),
+  status: { $in: ['new', 'contacted', 'confirmed'] }
+});
+
+if (existingBooking) {
+  return res.status(400).json({
+    success: false,
+    message: 'This date is already booked by another customer. Please choose a different date.'
   });
 }
 
@@ -153,6 +158,7 @@ router.delete('/:id', protect, async (req, res) => {
 });
 
 module.exports = router;
+
 
 
 
