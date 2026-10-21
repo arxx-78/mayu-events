@@ -146,6 +146,48 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
   .payment-container h1 { font-size: 24px; }
 }
 </style>
+<style id="responsive-style">
+/* ===== PC VIEW ===== */
+@media (min-width: 769px) {
+  .navbar { padding: 15px 50px !important; }
+  .nav-logo { font-size: 20px !important; }
+  .nav-links { gap: 40px !important; }
+  .payment-section { padding: 120px 20px 60px !important; }
+  .payment-container { padding: 50px 40px !important; max-width: 550px !important; }
+  .payment-container h1 { font-size: 36px !important; }
+  .qr-container { padding: 25px !important; }
+  .qr-container img { width: 320px !important; height: 320px !important; }
+  .upi-id { font-size: 18px !important; }
+  .payment-note { font-size: 14px !important; }
+  .whatsapp-btn { padding: 16px 35px !important; font-size: 15px !important; }
+}
+
+/* ===== MOBILE VIEW ===== */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar { padding: 10px 15px !important; }
+  .nav-logo { font-size: 16px !important; }
+  .nav-links { display: none !important; }
+
+  /* Payment Section */
+  .payment-section { padding: 90px 15px 40px !important; }
+  .payment-container { padding: 30px 20px !important; max-width: 100% !important; }
+  .payment-container h1 { font-size: 24px !important; }
+  .payment-container .sub { font-size: 12px !important; }
+
+  /* QR Code */
+  .qr-container { padding: 15px !important; }
+  .qr-container img { width: 240px !important; height: 240px !important; }
+
+  /* UPI ID */
+  .upi-id { font-size: 14px !important; }
+  .payment-note { font-size: 12px !important; }
+
+  /* Buttons */
+  .whatsapp-btn { padding: 12px 25px !important; font-size: 13px !important; width: 100% !important; justify-content: center !important; }
+  .back-btn { font-size: 13px !important; }
+}
+</style>
 </head>
 <body>
 
@@ -187,3 +229,4 @@ h1, h2, h3 { font-family: 'Cinzel', serif; }
 
 </body>
 </html>
+
